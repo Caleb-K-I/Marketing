@@ -1,0 +1,1240 @@
+---
+title: "projet marketing"
+author: "KASHALA ILUNGA Caleb"
+date: "03/04/2020"
+header-includes:
+- \usepackage[Glenn]{fncychap}
+- \usepackage{fancyhdr}
+fontsize: 14pt
+lang: 'fr'
+geometry: a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm
+output: 
+   pdf_document :
+       toc : yes 
+       number_section : yes
+       highlight: "tango"
+
+---
+```{r setup, include=FALSE,echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE,message = FALSE, warning = FALSE, eval = TRUE, cache = TRUE)
+```
+
+```{r library}
+
+library(ISLR)
+library(missMDA)
+library(MASS)
+library(dplyr)# en particulier pour la syntae %>%
+library(rsample)
+library(class)# package contenant la focntion knn
+library(rpart) # package pour les arbres CART
+library(rpart.plot)
+library(randomForest)
+library(e1071)
+library(tidyr)
+library(ggplot2)
+library(parallel)
+library(caret)
+library(parallel)
+library(FactoMineR)
+library(mice)
+library(plotROC)
+library(ada)
+library(precrec)
+library(gridExtra)
+library(formattable)
+library(stargazer)
+library(kableExtra)
+library(ggpubr)
+library(ggsci)
+library(scales)
+library(GGally)
+library(ggeffects)
+library(forestmodel)
+library(stargazer)
+library(formattable)
+library(PerformanceAnalytics)
+library(gridExtra)
+library(corrplot)
+library(mfx)
+library(ggeffects)
+library(forestmodel)
+
+```
+
+
+```{r affectation_data, echo=FALSE}
+set.seed(124)
+data<-read.table("HRS.csv",header = TRUE,sep = ",")
+d<-data[,-c(1)]
+data_split <- d %>% initial_split(prop = 2/3)
+test_data <- data_split %>% testing()
+train_data <- data_split %>% training()
+df<-train_data
+colnames(test_data) <-c("assurance_privé","age","hispanique","blanc","femme","année_d_édu_ation","marié","excellente_santé","trés_bonne_santé","bonne_santé","santé_passable","mauvaise_santé","maladie_chronique","adl","retraité","conjoint_retraité","revenu","assuré","statut_santé")
+
+colnames(df) <- c("assurance_privé","age","hispanique","blanc","femme","année_d_édu_ation","marié","excellente_santé","trés_bonne_santé","bonne_santé","santé_passable","mauvaise_santé","maladie_chronique","adl","retraité","conjoint_retraité","revenu","assuré","statut_santé")
+gra<-d
+df1<-df
+df2<-df
+df3<-df
+df4<-df
+df4<-df
+df5<-df
+df6<-df
+colnames(gra)<-c("assurance_privé","age","hispanique","blanc","femme","année_d_édu_ation","marié","excellente_santé","trés_bonne_santé","bonne_santé","santé_passable","mauvaise_santé","maladie_chronique","adl","retraité","conjoint_retraité","revenu","assuré","statut_santé")
+```
+\newpage
+# Nos variable étudiées 
+
+-La base de données que nous allons étudier est une base de données qui contient des informations sur diverses utilisations des services médicaux. Les personnes âgées peuvent obtenir une assurance complémentaire soit en l'achetant elles-mêmes
+ou en adhérant à des régimes parrainés par l'employeur.Le but de l'étude que nous allons ici réaliser,est de savoir si oui ou non les personnes âgées  ont souscrit une assurance complémentaire,la variable *assuré* sera donc notre variable à expliquer.Pour ce faire nous allons commencer par une études globale sur la base de données puis ensuite nous allons procéder à une estimation d'un modéle logit et probit  et définir le meilleur modéle de "prédiction".
+\linebreak
+-Notre base de données contient 3206 observations et 20 variables.
+\linebreak
+Nous observons que notre base de données a une varibale appelé "X" qui correspond à la numérotation des lignes de chaque individu, nous l'avons donc retiré cette variable car elle apporte aucune information importante dans l'étude que nous aurons à mener ici.
+\linebreak
+Il nous reste donc 19 variables sur notre base de données dont la variable à expliquer *assuré* avec lesquelles nous allons faire notre étude.
+- Nos variables explicatives sont :
+\linebreak
+Pour toute les variables la valeur 1 veut dire OUI et 0 veut dire NON sauf celle dont nous allons le préciser.                
+\linebreak
+
+**assurance_privé** : Si oui ou non l'individu a souscrit une assurance privée,prend la valeur 1 ou 0 .  
+
+\linebreak
+
+**age** :Qui correspond à l'âge de l'individu. 
+
+\linebreak
+
+**hispanique** :Si oui ou non l'individu est hispanique,prend la valeur 1 et 0.
+
+\linebreak
+
+**blanc** :si oui ou non l'individu est blanc.     
+
+\linebreak
+
+**femme** :Si oui ou non l'individu est une femmme,prend la valeur 1 et 0.                                                       
+
+\linebreak
+
+**année_d_éducation**: Qui correspond au nombre d'année d'étude éffectuer par l'individus.                                         
+
+\linebreak
+
+**marié**:Si oui ou non l'individu est marié.                                                      
+
+\linebreak
+
+**excellente_santé**:Si la personne a oui ou non une excellente santé,prend la valeur 1 et 0.
+
+\linebreak
+
+**trés_bonne_santé**:Si la personne a oui ou non une trés bonne santé,prend la valeur 1 et 0.
+
+\linebreak
+
+**bonne_santé**:Si la personne a oui ou non une bonne santé,prend la valeur 1 et 0.                                                
+
+\linebreak
+
+**santé_passable**:Si la personne a oui ou non une  santépassable ,prend la valeur 1 et 0.
+
+\linebreak
+
+**mauvaise_santé**:Si la personne a oui ou non une mauvaise santé,prend la valeur 1 et 0.
+
+\linebreak
+
+**maladie_chronique**:Nombre de maladie chronique chez l'individu.                                 
+ 
+\linebreak
+
+**adl**:le nombre de limitations (jusqu'à cinq) sur les activités de la vie quotidienne.                                              
+
+\linebreak
+
+**retraité**:Si l'individu est retaité.                                                    
+
+\linebreak
+
+**conjoint_retraité**:Si le conjoint de l'individu est retraité.                                                       
+
+\linebreak
+
+**revenu**:revenu de l'individu.                                                              
+
+\linebreak
+
+**statut_santé**:statut santé de l'individu.                                                    
+
+\linebreak
+
+- Notre variable à expliquer *assuré*:
+
+
+```{r}
+gra$assuré<-as.factor(gra$assuré)
+ggplot(data = gra, aes(x=assuré))+
+  geom_bar( fill="steelblue")+
+  theme_minimal()+
+  geom_text(aes(label = ..count..), stat = "count", position = position_stack(.5))  +
+  xlab("assuré") +
+  ylab("Effectifs") 
+
+```
+On constate que sur notre base de données il y'a environs 2000 indivus qui ne sont pas souscrit à une  assurance complémentaire et environs 1250 qui sont souscrit à une assurance complémentaire.
+
+```{r}
+par(mfrow=c(1,2))
+gra$blanc<-as.factor(gra$blanc)
+gra$hispanique<-as.factor(gra$hispanique)
+plot(gra$blanc,col="darkred",xlab= "blanc",ylab="effectif",main="représentantation des blancs")
+plot(gra$hispanique,col="darkred",xlab= "hispanique",ylab="effectif",main="représentantation des hispaniques")
+```
+- On constate qu'il y'a bien plus de blanc que d'hispanique dans notre base de données.
+
+```{r,fig.show='hold'}
+par(mfrow=c(1,2))
+ggplot(df, aes(x=revenu))+
+  geom_density(linetype="dashed")+
+  xlab("revenu") +
+  ylab("densité") 
+gra$revenu<-log(gra$revenu)
+ggplot(gra, aes(x=revenu))+
+  geom_density(linetype="dashed")+
+  xlab("lnrevenu") +
+  ylab("densité") 
+```
+On contate que la majorité des individus ont des revenu reparti entre 0 et 250.Nous avons pas l'information pour savoir si les revenus sont donnés dans quel ordre d'échelle.
+Nous avons mis une representaion du revenu au logarithme pour montrer qu'il y'a un effet de lissage ce quin permet de mieux capter les changements.$$\\$$
+```{r}
+gra$assuré<-as.factor(gra$assuré)
+gra$femme<-as.factor(gra$femme)
+ggplot(gra) +
+  aes(x = femme,fill=assuré) +
+  geom_text(aes(label = ..count..), stat = "count", position = position_stack(.5)) +
+  geom_bar() +
+  xlab("sexe") +
+  ylab("Effectifs") +
+  labs(fill = "assuré")+
+  geom_text(aes(label = ..count..), stat = "count", position =position_stack(.5))+ scale_fill_manual(values=c( "#E69F00", "#56B4E9"))
+```
+
+-À travers ce graphique on peut voir deux imformations.La premiere est qu'il y'a plus d'homme que de femme dans notre base de données et la deuxiéme et que chez les femmes comme chez les hommes il y' a plus d'individu qu n'ont pas de d'assurance complémentaire.$$\\$$
+
+```{r}
+gra$age<-as.factor(gra$age)
+ggplot(gra) +
+  aes(x = age,fill=assuré) +
+  geom_bar(position="dodge") +
+  xlab("age") +
+  ylab("Effectifs") +
+  labs(fill = "assuré")+ scale_color_brewer(palette="Paired") + 
+  theme_classic()+theme(legend.position="top")+ scale_fill_manual(values=c( "#E69F00", "#56B4E9"))
+
+```
+- Comme on peut le voir sur ce graphique la tranche d'âge la plus representé dans notre base de données et la tranche d'age 65  72 ans environs.Et en majorité il y'a toujours plus de non souscrit à une assurance complémentaire que des souscrit$$\\$$
+```{r}
+gra$année_d_édu_ation<-as.factor(gra$année_d_édu_ation)
+ggplot(gra) +
+  aes(x =année_d_édu_ation) +
+  geom_bar(position="dodge",color= "#E69F00") +
+  xlab("anneé d'éducation") +
+  ylab("Effectifs") +
+  labs(fill = "assuré")+ scale_color_brewer(palette="Paired") + 
+  theme_classic()+theme(legend.position="top")+
+  facet_grid(assuré ~ .)+ ggtitle("graphique de nombre d'année d'etude selon sa souscription à lassurance")
+```
+-Ce graphique nous montre que la majorité des individus non souscrit et souscrit ont effectué 12 ans d'étude.Et que la repartions d'individus souscrit à l'assurance commence à partir de 8 ans études.$$\\$$
+```{r}
+
+ggplot(gra, aes(x=adl,fill=assuré)) + 
+  geom_density()+
+  labs(title="Répartition des restriction d'activités quotidienne",x="adl", y = "Densité")+ scale_fill_manual(values=c( "#E69F00", "#56B4E9"))
+
+```
+-on voit assez bien que la plus part d'individus souscrit ou pas à une assurance complémentaire n'ont pas de restriction dans pour la limite d'activités dans la vie quotidenne et que plus il y'a de restricton moins la densité est grande.$$\\$$
+```{r}
+gra$statut_santé<-as.factor(gra$statut_santé)
+df$blanc<-as.factor(df$blanc)
+ggplot(gra, aes(x=statut_santé)) + 
+  geom_bar(,color= "red")+
+  labs(title="graphique des satut de santé selon qu'on ait une complémentaire santé",x="statut de santé", y = "nombre")+
+  facet_grid(assuré ~ .)
+
+```
+-On remarque  sur ce graphique que la majorité des personnes qui se souscrivent à une assurance complémentaire on un bonne santé et que c'est la même chose chez les non assuré.Donc on d'autre termes que la santé n'a pas forcément une grande influence dans le fait d'avoir ou pas une assurance complémentaire,il faudra le vérifier.$\\$
+
+
+# Modéle général , Vraisemblance et Log-vraisemblance.
+
+
+Le modéle probit et logit sont des modéle dichotomique par modéle dichotomique, on entend un modéle statistique dans lequel la variable expliquée ne peut prendre
+que deux modalités (variable dichotomique). Il s’agit alors généralement d’expliquer la survenue ou non d’un événement, ou d’un choix. 
+On considére un échantillon de n individus d’indices i = 1, .., n. 
+Pour chaque individu, on observe si un certain évènement s’est réalisé et l’on pose:
+
+
+$Y_{i}$ = $\left\{\begin{array}{ll}1~ si~ l'evenement~ se ~ réalise~ ,Y^{*}\geq 0\\0~ sinon~ ,Y^{*}\leq 0\end{array}\right.$~~avec~~Y^{*}=$\beta X_{i}$ +$\varepsilon_{i}$
+
+
+
+- On utilise la méthode du maximum de vraisemblance pour estimer nos paramétres qui s'ecrit de façon suivante:
+
+
+$L(\theta)=\prod_{i=1}^{N}F( X_{i}  \theta)^{Y_i}(1-F( X_{i}  \theta))^{1-Y_i}$
+
+
+- Et  sa log-vraisemblance qui s'ecrit de façon suivante
+
+$log(L(\theta))=\sum_{i:Y_i=1}logF( X_{i}  \theta) + \sum_{i:Y_i=1}log(1-F( X_{i}  \theta))$
+
+
+- Elle permet d'obtenir les différents coefficients associés à nos modéles .
+
+# Estimation (probit et logit)
+
+Nous allons ici vous présenter les Modéles probit et logit.
+
+## Probit
+
+- Pour le modéle Probit on pause F ,qui est la fonction de répartition d’une gaussienne centrée réduite,usuellement notée Φ :$\\$
+ 
+
+F( X_{i}  \theta)=\Phi( X_{i}  \theta)=\int_{i=1}^{X_{i}\theta} \frac{\exp{(-t²/2)}}{\sqrt{2\pi}}dt
+
+- Et sa densité correspondante, usuellement notée φ, est :$\\$
+f( X_{i}  \theta)=\phi( X_{i}  \theta)= \frac{\exp{-((X_{i}  \theta)²/2)}}{\sqrt{2\pi}}dt
+$$\\$$
+## Logit
+
+-Pour le modéle Logit on pause F ,qui est la fonction de répartition introduite spécialement pour ce type de modéle,usuellement notée Λ:$\\$
+
+
+F( X_{i}  \theta)=\Lambda( X_{i}  \theta)= \frac{\exp{(X_{i}  \theta)}}{1+\exp(X_{i}  \theta)  }dt=\frac{1}{1+\exp(-X_{i}  \theta)}dt
+
+
+ - Et sa densité correspondante, usuellement notée λ, est :$$\\$$
+ 
+
+f( X_{i}  \theta)=\lambda( X_{i}  \theta)= \frac{\exp{(-X_{i}  \theta)}}{(1+\exp(-X_{i}  \theta))²  }dt=\Lambda( X_{i}  \theta)(1-\Lambda( X_{i}  \theta))
+
+
+- Il n’y a pratiquement pas de différence entre ces deux lois, l’introduction de la loi logistique étant simplement plus simple en terme de calcul en général.
+La seule différence notable entre les deux modéles probit et logit vient tout simplement de la spécification de la fonction de répartition F. 
+
+# Hypothése et spécification de test
+
+**Test de wald**
+
+Le test de Wald est un test paramétrique économétrique qui permet de tester la "vraie" valeur du paramètre basé sur l'estimation de l'échantillon.À savoir si nos paramétres sont siginificatifs ou pas.
+
+le test s'écrit de façon suivante:
+
+H0:$\beta_k$ = 0 ,alors le paramétre est n'est pas significativement différent de 0 $\\$
+H1:$\beta_k$ $\ne$  ,0 alors le paramétre est significativement différent de 0 $\\$
+
+*la statistique:*
+
+$$W= \frac{\beta²_k}{S²_k }$$
+
+*Décision*
+
+On rejette H0 au risque $\alpha$ si W $\geq$ $\chi²_{1-\alpha}(1)$
+
+
+
+**Test de spécification Hosmer-Lemeshow**
+
+
+Le test de spécification Hosmer-Lemeshow  est un test statistique pour la qualité d’ajustement pour la régression logistique modèles, permet de tester si les proportions observées et attendues diffèrent de manière significative .
+soit G le nombre de groupe,les observations sont regroupées par probabilité attendue. les observations avec une probabilité attendue similaire sont regroupées dans le même groupe,  pour créer 10 groupes.
+soit p_g la probabilité moyenne prédite dans le groupe g
+soit y_g la fréquence d'échantillonnage moyenne dans le groupe g.$\\$
+
+*la statistique:*$\\$
+
+$HL=\sum^{G}_{g=1} \frac{(p_g-y_g)²}{y_g(1-y_g) }$
+
+Sous la valeur nulle de spécification correcte, la statistique est distribuée comme \chi²(G-2).
+
+*Décision*\linebreak
+
+Si la p-value est inférieur à l'alpha choisi alors l'hypothése nulle selon laquelle les  proportions observées et attendues sont les mêmes est rejetée.\linebreak
+
+
+
+# Comparaison des modéles 
+
+- Nous avons éffectué une premiére régression probit et logit avec tout nos variables pour avoir une vue d'ensemble sur nos variables et données et pour essayer de voir la significativité de chaque varible et on s'aperçoit que toutes les variables sauf assurance privée et la "constante" n'ont pas de coéfficient $\beta$ associé ce qui suggére une certaine corrélation forte entre l'un de nos variables explicatives et notre variable à expliquer.
+
+\linebreak
+
+le modéle est le suivant:
+
+\linebreak
+
+\begin{center}
+$assuré_i$ = $\beta_0$ +  $\beta_1$ $assurance privé$  + $\beta_2$ $age$+ $\beta_3$ $hispanique$ + $\beta_4$ $blanc$ + $\beta_5$ $femme$  + $\beta_{6}$ $année d'éducation$ + $\beta_{7}$ $marié$ + $\beta_{8}$ $excellente santé$ +  $\beta_9$ $trés bonne santé$  + $\beta_10$ $bonne santé$+ $\beta_11$ $santé passable$ + $\beta_12$ $mauvaise santé$ + $\beta_13$ $maladie chronique$  + $\beta_{14}$ $adl$ + $\beta_{15}$ $retraité$ + $\beta_{16}$ $conjoint retraité$+ $\beta_{17}$ $revenu$ + $\beta_{18}$ $statut santé$ + $\varepsilon_i$ 
+\end{center}
+
+
+```{r modele avec toute les variables,results='asis'}
+regl<- glm(assuré ~ assurance_privé+age+hispanique+blanc+femme+année_d_édu_ation+marié+excellente_santé+ trés_bonne_santé+bonne_santé+santé_passable+mauvaise_santé+maladie_chronique+adl+retraité+conjoint_retraité+revenu+statut_santé ,data = df, family = binomial(logit))
+
+regp<- glm(assuré ~ assurance_privé+age+hispanique+blanc+femme+année_d_édu_ation+marié+excellente_santé+ trés_bonne_santé+bonne_santé+santé_passable+mauvaise_santé+maladie_chronique+adl+retraité+conjoint_retraité+revenu+statut_santé,data = df, family = binomial(probit))
+
+
+stargazer(regl,regp,type="latex", digits = 5,title = "regression logit et probit avec  toute les variables",header=F,font.size = "tiny")
+
+```
+
+
+Et on s'aperçoit rapidement à travers ce graphique de  matrice de corrélation que ceci est dû à la forte corrélation que nous avons entre la variable assurance privée et assuré.
+
+\linebreak
+
+De même nous constatons aussi des corrélation plus ou moins important entre d'autres variables comme:
+
+\linebreak
+    - statut stanté et bonne santé 
+    - statut stanté et mauvaise santé
+    - statut stanté et santé passable
+    - statut stanté et maladie chronique
+
+
+
+```{r corrélation}
+corrplot(cor(d,method = c("pearson", "kendall", "spearman")))
+```
+
+
+
+Pour la suite de notre étude, toute les estimations de nos modéles qui seront réalisées sans la variable la variable *"assurance privée"*.
+
+\linebreak
+
+
+
+## Mise en place des différent modéle
+
+
+
+- Le  modéle 0 est le modéle suivant:
+
+Dans ce modéle  la variable "statut santé" a été retiré dû à sa colinéarité de plus  nous avons remarquer que cette même variable est une variable qui traduit de façon global les informations liées aux cinq variables associées à l'état de santé.
+
+- le modéle 0 que nous proposant est donc le suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_{7}$ $excellente santé_i$ +  $\beta_8$ $trés bonne santé_i$  + $\beta_9$ $bonne santé_i$+ $\beta_10$ $santé passable_i$ + $\beta_11$ $mauvaise santé_i$ + $\beta_12$ $maladie chronique_i$  + $\beta_{13}$ $adl_i$ + $\beta_{14}$ $retraité_i$ + $\beta_{15}$ $conjoint retraité_i$+ $\beta_{16}$ $revenu_i$ + $\varepsilon_i$ 
+\end{center}
+
+
+
+```{r modéle0}
+set.seed(124)
+regl0<- glm(assuré ~ age+hispanique+blanc+femme+année_d_édu_ation+marié+excellente_santé+ trés_bonne_santé+bonne_santé+santé_passable+mauvaise_santé+maladie_chronique+adl+retraité+conjoint_retraité+revenu,data = df, family = binomial(logit))
+
+regp0<- glm(assuré ~ age+hispanique+blanc+femme+année_d_édu_ation+marié+excellente_santé+ trés_bonne_santé+bonne_santé+santé_passable+mauvaise_santé+maladie_chronique+adl+retraité+conjoint_retraité+revenu,data= df, family = binomial(probit))
+
+```
+
+
+- Pour l'éstimation de ce premier modéle  nous avons enlever "excellente_santé","trés_bonne_santé","bonne_santé","santé_passable" et "mauvaise santé"  dû à leur faible et moyenne corrélation avec la variable statut_santé,dont nous avons également pu rémarquer qu'elle traduisait les informations de ces cinq variables liées à la santé.
+
+- Le modéle 1 est le modéle suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+
+- Le modéle 0 et 1 nous permettra de jauger et savoir s'il est plus pertinent de garder les 5 variables associé à l'état de santé ou simplement de garder la variable "statut sante" et de retirer les cinq autres.
+
+
+```{r modéle1}
+set.seed(124)
+df1<-df[,-c(1,8,9,10,11,12)]
+regl1<- glm(assuré ~ age+hispanique+blanc+femme+année_d_édu_ation+marié+maladie_chronique+adl+retraité+conjoint_retraité+revenu+statut_santé,data = df1, family = binomial(logit))
+regp1<- glm(assuré ~ age+hispanique+blanc+femme+année_d_édu_ation+marié+maladie_chronique+adl+retraité+conjoint_retraité+revenu+statut_santé,data = df1, family = binomial(probit))
+
+
+```
+
+- Pour l'éstimation de ce deuxiéme modéle nous avons éffectué un changement sur la variable age,que nous avons divisé en 3 classe d'age,une premiére classe de 52 à 64 ans une deuxiéme classe de 64 à 76 ans  et une troisiéme clase de 76 à 86 ans.
+- Le modéle 2 est le suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+
+
+```{r modéle2}
+set.seed(124)
+min(df$age)
+Breaksage = c(min(data$age), 64, 76,max(data$age))
+ageclasse = cut(df2$age, breaks = Breaksage)
+df2$age<-ageclasse
+regl2<- glm(assuré ~age+hispanique+blanc+femme+année_d_édu_ation+marié+ trés_bonne_santé+bonne_santé+santé_passable+mauvaise_santé+maladie_chronique+adl+retraité+conjoint_retraité+revenu +statut_santé,data = df2, family = binomial(logit))
+
+regp2<- glm(assuré ~age+hispanique+blanc+femme+année_d_édu_ation+marié+ trés_bonne_santé+bonne_santé+santé_passable+mauvaise_santé+maladie_chronique+adl+retraité+conjoint_retraité+revenu +statut_santé,data = df2, family = binomial(probit))
+```
+
+
+- Pour l'éstimation de ce troisiéme modéle nous avons appliquer le logarithme à la variable revenu pour baissé son effet d'echelle et ainsi mieux le comparer aux autres variables et ainsi pouvoir mieux capter les variations liéés à cette variable en la lissant.
+
+- Le modéle 3 est le modéle suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+```{r modéle 3}
+df3$revenu<-log(df3$revenu+1)
+colnames(df3) <- c("assurance_privé","age","hispanique","blanc","femme","année_d_édu_ation","marié","excellente_santé","trés_bonne_santé","bonne_santé","santé_passable","mauvaise_santé","maladie_chronique","adl","retraité","conjoint_retraité","lnrevenu","assuré","statut_santé")
+
+```
+
+```{r modéle 3.1}
+set.seed(124)
+
+regl3<- glm(assuré ~age+hispanique+blanc+femme+année_d_édu_ation+marié+conjoint_retraité+lnrevenu+statut_santé+adl,data = df3, family =binomial(logit))
+regp3<- glm(assuré ~ age+hispanique+blanc+femme+année_d_édu_ation+marié+conjoint_retraité+lnrevenu+statut_santé+adl,data = df3, family =binomial(probit))
+
+```
+
+Pour l'éstimation de ce quatriéme modele  nous avons tous simplement mis au carré la variable age dans le but d'éssayer de capter au mieux les changement liés à cette variable.
+
+- Le modéle 4  est le modéle suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $Age²_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+```{r modele 4}
+df4$age<-df4$age^2
+colnames(df4) <- c("assurance_privé","Age²","hispanique","blanc","femme","année_d_édu_ation","marié","excellente_santé","trés_bonne_santé","bonne_santé","santé_passable","mauvaise_santé","maladie_chronique","adl","retraité","conjoint_retraité","revenu","assuré","statut_santé")
+```
+
+
+
+
+
+```{r modéle 4.1}
+set.seed(124)
+regl4<- glm(assuré ~Age²+hispanique+blanc+femme+année_d_édu_ation+marié+ adl+retraité+conjoint_retraité+revenu+statut_santé
+,data = df4, family = binomial(logit))
+regp4<- glm(assuré ~ Age²+hispanique+blanc+femme+année_d_édu_ation+marié+ adl+retraité+conjoint_retraité+revenu +statut_santé
+,data = df4, family = binomial(probit))
+
+```
+
+
+
+Pour l'éstimation de ce cinquiéme modéle nous avons tout simplement combiné l"age au carré et le logarithme sur le revenu .
+
+- Le modéle 5  est le modéle suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $Age²_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+```{r modéle 5}
+df5$age<-df5$age^2
+df5$revenu<-log(df5$revenu+1)
+colnames(df5) <- c("assurance_privé","Age²","hispanique","blanc","femme","année_d_édu_ation","marié","excellente_santé","trés_bonne_santé","bonne_santé","santé_passable","mauvaise_santé","maladie_chronique","adl","retraité","conjoint_retraité","lnrevenu","assuré","statut_santé")
+```
+
+
+
+```{r modéle 5.1}
+set.seed(124)
+regl5<- glm(assuré ~Age²+hispanique+blanc+femme+année_d_édu_ation+marié+retraité+conjoint_retraité+lnrevenu +statut_santé+adl
+,data = df5, family = binomial(logit))
+regp5<- glm(assuré~ Age²+hispanique+blanc+femme+année_d_édu_ation+marié+adl+retraité+conjoint_retraité+lnrevenu +statut_santé+adl
+,data = df5, family = binomial(probit))
+
+
+```
+- Pour l'estimation de sixiéme modéle nous avons effectué un changement sur la variable statut_santé,ainsi elle prend la valeur de:
+
+   1 si l'individu a une excellente santé
+   
+  \linebreak
+  
+   2 si l'individu a une trés bonne santé
+   
+   \linebreak
+   
+   3 si l'individu a une bonne santé
+   
+   \linebreak
+   
+   4 si l'individu a une santé passable
+   
+   \linebreak
+   
+   5 si l'individu a une mauvaise santé
+   
+   \linebreak
+  
+- Le modéle 6  est le modéle suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $Age²_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_2$ + $\beta_{13}$ $statut santé_3$+ $\beta_{14}$ $statut santé_4$+ $\beta_{15}$ $statut santé_5$+ $\varepsilon_i$
+\end{center}
+
+```{r modéle 6}
+for (i in  1:nrow(df6) ){
+  if (df6[i,8]==1){
+    df6[i,19]<-1
+}
+  if (df6[i,9]==1){
+    df6[i,19]<-2
+}
+  
+  if (df6[i,10]==1){
+    df6[i,19]<-3
+} 
+  if (df6[i,11]==1){
+    df6[i,19]<-4
+}
+   if (df6[i,12]==1){
+     df6[i,19]<-5
+}
+  
+}
+```
+
+
+```{r modéle 6.1}
+set.seed(124)
+df6$statut_santé<-as.factor(df6$statut_santé)
+regl6<- glm(assuré ~age+blanc+hispanique+femme+année_d_édu_ation +  marié+hispanique+blanc+femme+année_d_édu_ation+marié+maladie_chronique+adl+retraité+conjoint_retraité+revenu+statut_santé+adl
+,data = df6, family = binomial(logit))
+regp6<- glm(assuré ~ age+blanc+hispanique+femme+année_d_édu_ation +  marié+hispanique+blanc+femme+année_d_édu_ation+marié+maladie_chronique+adl+retraité+conjoint_retraité+revenu +statut_santé+adl
+,data = df6, family = binomial(probit))
+
+```
+
+- Pour l'estimation de septiéme  modéle nous avons rajouté la variable age² et lnrevenu en plus des age et revenu que nous avions au départ.
+
+- Le modéle 7 est le modéle suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $Age²_i$+ $\beta_{13}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_2$ + $\beta_{13}$ $statut santé_3$+ $\beta_{14}$ $statut santé_4$+ $\beta_{15}$ $statut santé_5$+ $\varepsilon_i$ 
+\end{center}
+
+
+
+```{r modéle 7}
+age²<-df6$age^2
+lnrevenu<-log(df6$revenu+1)
+df6_1<-data.frame(df6,age²)
+df7<-data.frame(df6_1,lnrevenu)
+```
+
+
+
+```{r modéle 7.1}
+set.seed(124)
+df7$statut_santé<-as.factor(df7$statut_santé)
+regl7<- glm(assuré ~age+blanc+hispanique+femme+année_d_édu_ation +  marié+hispanique+blanc+femme+année_d_édu_ation+marié+maladie_chronique+adl+retraité+conjoint_retraité+revenu +statut_santé+age²+lnrevenu+adl
+,data = df7, family = binomial(logit))
+regp7<- glm(assuré ~ age+blanc+hispanique+femme+année_d_édu_ation +  marié+hispanique+blanc+femme+année_d_édu_ation+marié+maladie_chronique+adl+retraité+conjoint_retraité+revenu +statut_santé+age²+lnrevenu+adl
+,data = df7, family = binomial(probit))
+```
+
+- Aprés avoir mise en place nos sept modéles différent,nous allons sélectionner les modéles probits et logits qui présente les meilleurs critéres d'information et estimations sur les données d'entrainement.Ensuite nous allons essayer d'ameliorer nos différents modéles à travers plusieur procéder pour en tirer le meilleur modéle possible.
+
+\linebreak
+
+```{r AIC_BIC}
+
+A_logit0<-AIC(regl0)
+A_probit0<-AIC(regp0)
+A_logit1<-AIC(regl1)
+A_probit1<-AIC(regp1)
+A_logit2<-AIC(regl2)
+A_probit2<-AIC(regp2)
+A_logit3<-AIC(regl3)
+A_probit3<-AIC(regp3)
+A_logit4<-AIC(regl4)
+A_probit4<-AIC(regp4)
+A_logit5<-AIC(regl5)
+A_probit5<-AIC(regp5)
+A_logit6<-AIC(regl6)
+A_probit6<-AIC(regp6)
+A_logit7<-AIC(regl7)
+A_probit7<-AIC(regp7)
+B_logit0<-BIC(regl0)
+B_probit0<-BIC(regp0)
+B_logit1<-BIC(regl1)
+B_probit1<-BIC(regp1)
+B_logit2<-BIC(regl2)
+B_probit2<-BIC(regp2)
+B_logit3<-BIC(regl3)
+B_probit3<-BIC(regp3)
+B_logit4<-BIC(regl4)
+B_probit4<-BIC(regp4)
+B_logit5<-BIC(regl5)
+B_probit5<-BIC(regp5)
+B_logit6<-BIC(regl6)
+B_probit6<-BIC(regp6)
+B_logit7<-BIC(regl7)
+B_probit7<-BIC(regp7)
+BIC<-c(
+B_logit0,
+B_probit0,
+B_logit1,
+B_probit1,
+B_logit2,
+B_probit2,
+B_logit3,
+B_probit3,
+B_logit4,
+B_probit4,
+B_logit5,
+B_probit5,
+B_logit6,
+B_probit6,
+B_logit7,
+B_probit7)
+AIC<-c(
+A_logit0,
+A_probit0,
+A_logit1,
+A_probit1,
+A_logit2,
+A_probit2,
+A_logit3,
+A_probit3,
+A_logit4,
+A_probit4,
+A_logit5,
+A_probit5,
+A_logit6,
+A_probit6,
+A_logit7,
+A_probit7)
+TABB<-cbind(AIC,BIC)
+colnames(TABB)<-c("AIC","BIC")
+rownames(TABB)<-c("Modéle logit 0","Modéle probit 0","Modéle logit 1","Modéle probit 1","Modéle logit 2","Modéle probit 2","Modéle logit 3","Modéle probit 3","Modéle logit 4","Modéle probit 4","Modéle logit 5","Modéle probit 5","Modéle logit 6","Modéle probit 6","Modéle logit 7","Modéle probit 7")
+kable(TABB,align = "c",caption = "Comparaison des AIC et BIC modèles") %>%
+kable_styling(latex_options=c("striped","hold_position"),full_width = F,font_size = 12)
+```
+
+- Aprés avoir pu étudier le critère d'information d'Akaike (AIC,Akaike information criterion) qui est une mesure de la qualité d'un modèle statistique ainsi que  le critère d'information bayésien (BIC,bayesian information criterion) dérivé du critère d'information d'Akaike.Nous avons sélectionné les modéles qui présente les plus faibles mesure d'AIC et de BIC combinés.
+Les modéles 5 et 7 sont les modéles que nous avons séléctionné pour la suite de l'étude que nous allons mener. À travers ces deux modéles nous allons comparer les modéles probit et logit.
+-Notre modéle 5 est le suivant
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $Age²_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+
+-Notre modéle 7 est le suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $Age²_i$+ $\beta_{13}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_2$ + $\beta_{13}$ $statut santé_3$+ $\beta_{14}$ $statut santé_4$+ $\beta_{15}$ $statut santé_5$+ $\varepsilon_i$ 
+\end{center}
+
+```{r STARGAZER5,results='asis'}
+
+stargazer(regl5,regp5,type="latex", digits = 5,title = "regression logit et probit modéle 5",header=F,font.size = "tiny")
+```
+```{r STARGAZER7,results='asis'}
+
+stargazer(regl7,regp7,type="latex", digits = 5,title = "regression logit et probit modéle 7",header=F,font.size = "tiny")
+```
+
+
+La différence que nous remarquons en premier entre les deux modéles est que les estimation $\beta$ associées aux variables explicatives du modéle probit sont toujours plus faibles que les estimation $\beta$ associées aux variables explicatives du modéle logit.Cette différence  découle probablement de la différence de leur fonction de répartition F et de densité f.
+
+
+De plus nous avons aussi remarqué que les AIC et BIC du modéle probit sont toujours un peu plus faible que celle du logit en général.
+
+
+
+```{r FINAL, results='hide'}
+set.seed(124)
+regl7_l<-step(regl7)
+regp7_p<-step(regp7)
+regl5_l<-step(regl5)
+regp5_p<-step(regp5)
+#durbinWatsonTest (P)
+#acf(residuals(P), main="prest.lm1")
+#shapiro.test(residuals(P))
+```
+
+- Les deux tableau qui vont suivre nous donnes la valeurs des odds ration associés à nosvariables explicatives ainsi que leurs intervalles de confiance qui peut nous renseigner en amont  surla significativité d'un coefficient.Un peut plus tard dans l'etude nous expliquerons le rôle des odds ration et qu'elle imformations nous pouvons en tirer de ces odds ratio qui sont généralement compris entre 0 et +$\infty$ 
+
+
+
+
+
+
+\begin{center}
+**Tableau des odds ratio et intervalles de confiance pour le modéle logit 5**
+
+```{r FOREST5,fig.show='hold'}
+set.seed(124)
+forest_model(regl5)
+```
+\end{center}
+
+\begin{center}
+**Tableau des odds ratio et intervalles de confiance pour le modéle logit 7**
+```{r FOREST7,fig.show='hold'}
+set.seed(124)
+forest_model(regl7)
+```
+\end{center}
+
+```{r,fig.show='hold',out.width="50%"}
+#durbinWatsonTest (P)
+#acf(residuals(P), main="prest.lm1")
+#shapiro.test(residuals(P))
+```
+
+
+
+# Prédiction et fitted
+
+- Pour la suite de l'étude ,aprés avoir sélectionner nos modéles 3 et 5 nous avons effectués une selection du meilleur modéle à partir de ces deux modéle de départ  à travers une sélection par AIC pour déterminer le modéle 5 et 7 "finaux" puis nous allons les comparer.
+
+\linebreak
+
+Le modéle 5 "final" est le suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $hispanique_i$ + $\beta_{2}$ $année d'éducation_i$ + $\beta_{3}$ $adl_i$ + $\beta_{4}$ $lnrevenu_i$+ $\varepsilon_i$ 
+\end{center}
+
+Le modéle 7 "final" est le suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $hispanique_i$ + $\beta_2$ $blanc_i$  + $\beta_{3}$ $année d'éducation_i$ + $\beta_4$ $maladie chronique_i$  + $\beta_{5}$ $adl_i$ + $\beta_{6}$ $revenu_i$+ $\beta_{7}$ $lnrevenu_i$+ $\varepsilon_i$ 
+\end{center}
+
+
+- Ces graphique ci-dessous nous montre visuellement la relation qu'à notre variables à expliquer "assuré" avec nos  différent variables explicatives,à savoir si elle ont réellement une influence sur celle-ci.
+
+\newpage
+
+**GRAPHIQUE SUR LES LIENS ENTRE LA VARIABLE À EXPLIQUER ET LES VARIABLES EXPLICATIVES**
+
+
+
+
+
+```{r FITED5.1}
+cowplot::plot_grid(plotlist = plot(ggeffect(regp5)))
+```
+
+
+```{r FITTED7}
+cowplot::plot_grid(plotlist = plot(ggeffect(regl7)))
+```
+
+
+
+## training
+
+
+**TABLEAU DE CONTINGENCE SUR LES DONNÉE D'APPRENTISSAGE**
+
+
+
+```{r CONTINGE1}
+set.seed(124)
+tabl7 <- cbind(df7, predict(regl7, newdata = df7, type = "link", se = TRUE))
+tabl7 <- within(tabl7, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+tabl7 <- cbind(tabl7, pred.assuré = factor(ifelse(tabl7$PredictedProb > 0.5, 1,0)))
+confusiontabl7 <- as.matrix(table(tabl7$pred.assuré, tabl7$assuré))
+```
+```{r CONTINGE2}
+set.seed(124)
+tabp7 <- cbind(df7, predict(regp7, newdata = df7, type = "link", se = TRUE))
+tabp7 <- within(tabp7, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+tabp7 <- cbind(tabp7, pred.assuré = factor(ifelse(tabp7$PredictedProb > 0.5, 1,0)))
+confusiontabp7 <- as.matrix(table(tabp7$pred.assuré, tabp7$assuré))
+```
+
+```{r CONTINGE3}
+set.seed(124)
+tabl5 <- cbind(df5, predict(regl5, newdata = df5, type = "link", se = TRUE))
+tabl5 <- within(tabl5, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+tabl5 <- cbind(tabl5, pred.assuré = factor(ifelse(tabl5$PredictedProb > 0.5, 1,0)))
+confusiontabl5 <- as.matrix(table(tabl5$pred.assuré, tabl5$assuré))
+
+```
+
+```{r CONTINGE4}
+set.seed(124)
+tabp5 <- cbind(df5, predict(regp5, newdata = df5, type = "link", se = TRUE))
+tabp5<- within(tabp5, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+tabp5 <- cbind(tabp5, pred.assuré = factor(ifelse(tabp5$PredictedProb > 0.5, 1,0)))
+confusiontabp5 <- as.matrix(table(tabp5$pred.assuré, tabp5$assuré))
+```
+
+```{r CONTINGE5}
+set.seed(124)
+tabl7_l <- cbind(df7, predict(regl7_l, newdata = df7, type = "link", se = TRUE))
+tabl7_l <- within(tabl7_l, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+tabl7_l <- cbind(tabl7_l, pred.assuré = factor(ifelse(tabl7_l$PredictedProb > 0.5, 1,0)))
+confusiontabl7_l <- as.matrix(table(tabl7_l$pred.assuré, tabl7_l$assuré))
+```
+
+
+```{r CONTINGE6}
+set.seed(124)
+tabp7_p <- cbind(df7, predict(regp7_p, newdata = df7, type = "link", se = TRUE))
+tabp7_p <- within(tabp7_p, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+tabp7_p <- cbind(tabp7_p, pred.assuré = factor(ifelse(tabp7_p$PredictedProb > 0.5, 1,0)))
+confusiontabp7_p <- as.matrix(table(tabp7_p$pred.assuré, tabp7_p$assuré))
+```
+
+```{r CONTINGE7}
+set.seed(124)
+tabl5_l <- cbind(df5, predict(regl5_l, newdata = df5, type = "link", se = TRUE))
+tabl5_l <- within(tabl5_l, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+tabl5_l <- cbind(tabl5_l, pred.assuré = factor(ifelse(tabl5_l$PredictedProb > 0.5, 1,0)))
+confusiontabl5_l <- as.matrix(table(tabl5_l$pred.assuré, tabl5_l$assuré))
+```
+```{r CONTINGE8}
+tabp5_p <- cbind(df5, predict(regp5_p, newdata = df5, type = "link", se = TRUE))
+tabp5_p <- within(tabp5_p, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+tabp5_p <- cbind(tabp5_p, pred.assuré = factor(ifelse(tabp5_p$PredictedProb > 0.5, 1,0)))
+confusiontabp5_p <- as.matrix(table(tabp5_p$pred.assuré, tabp5_p$assuré))
+```
+
+\begin{center}
+```{r CONTINGEA}
+set.seed(124)
+kable(confusiontabl5) %>%
+  add_header_above(c(" ", "Modéle logit 5 " = 2))
+kable(confusiontabl5_l) %>%
+  add_header_above(c(" ", "Modéle logit 5 final " = 2))
+kable(confusiontabp5) %>%
+  add_header_above(c(" ", "Modéle probit 5 " = 2))
+kable(confusiontabp5_p) %>%
+  add_header_above(c(" ", "Modéle probit 5 final " = 2))
+kable(confusiontabl7) %>%
+  add_header_above(c(" ", "Modéle logit 7 " = 2))
+kable(confusiontabl7_l) %>%
+  add_header_above(c(" ", "Modéle logit 7 final " = 2))
+kable(confusiontabp7) %>%
+  add_header_above(c(" ", "Modéle probit 7 " = 2))
+kable(confusiontabp7_p) %>%
+  add_header_above(c(" ", "Modéle probit 7 final" = 2))
+```
+
+
+```{r TRREURA}
+set.seed(124)
+L7<-(confusiontabl7[1,2]+confusiontabl7[2,1])/sum(confusiontabl7)
+L7F<-(confusiontabl7_l[1,2]+confusiontabl7_l[2,1])/sum(confusiontabl7_l)
+P7<-(confusiontabp7[1,2]+confusiontabp7[2,1])/sum(confusiontabp7)
+P7F<-(confusiontabp7_p[1,2]+confusiontabp7_p[2,1])/sum(confusiontabp7_p)
+L5<-(confusiontabl5[1,2]+confusiontabl5[2,1])/sum(confusiontabl5)
+L5F<-(confusiontabl5_l[1,2]+confusiontabl5_l[2,1])/sum(confusiontabl5_l)
+P5<-(confusiontabp5[1,2]+confusiontabp5[2,1])/sum(confusiontabp5)
+P5F<-(confusiontabp5_p[1,2]+confusiontabp5_p[2,1])/sum(confusiontabp5_p)
+TAUX_D_ERREUR<-c(L7,L7F,P7,P7F,L5,L5F,P5,P5F)
+TAB<-cbind(TAUX_D_ERREUR)
+colnames(TAB)<-c("Taux d'érreur")
+rownames(TAB)<-c("Modéle logit 5","Modéle logit 5 final","Modéle probit 5","Modéle probit 5 final","Modéle logit 7","Modéle logit 7 final","Modéle probit 7","Modéle probit 7 final")
+kable(TAB,align = "c",caption = "Taux d'erreur sur les données d'apprentissage") %>%
+kable_styling(latex_options=c("striped","hold_position"),full_width = F,font_size = 10)
+```
+\end{center}
+
+
+```{r TEST}
+set.seed(124)
+test_data6<-test_data
+for (i in  1:nrow(test_data6) ){
+  if (test_data6[i,8]==1){
+    test_data6[i,19]<-1
+}
+  if (test_data6[i,9]==1){
+    test_data6[i,19]<-2
+}
+  
+  if (test_data6[i,10]==1){
+    test_data6[i,19]<-3
+} 
+  if (test_data6[i,11]==1){
+    test_data6[i,19]<-4
+}
+   if (test_data6[i,12]==1){
+     test_data6[i,19]<-5
+}
+  
+}
+```
+```{r TEST6.1}
+set.seed(124)
+age²<-test_data6$age^2
+lnrevenu<-log(test_data6$revenu+1)
+test_data6_1<-data.frame(test_data6,age²)
+test_data7<-data.frame(test_data6_1,lnrevenu)
+```
+
+
+
+
+
+
+
+
+## TEST
+
+**TABLEAU DE CONTINGENCE SUR LES DONNÉE TEST**
+  
+```{r TEST7}
+set.seed(124)
+test_data7$statut_santé<-as.factor(test_data7$statut_santé)
+test.l <- cbind(test_data7, predict(regl7, newdata = test_data7, type = "response",se = TRUE))
+predtest.assuré <- factor(ifelse(test.l$fit > 0.5, 1, 0))
+test.l <- cbind(test.l, predtest.assuré)
+m.confusiontest <- as.matrix(table(test.l$predtest.assuré, test.l$assuré))
+```
+
+```{r CONTINGET1}
+set.seed(124)
+test.p<- cbind(test_data7, predict(regp7, newdata = test_data7, type = "response",se = TRUE))
+predtest.assuré <- factor(ifelse(test.p$fit > 0.5, 1, 0))
+test.p <- cbind(test.p, predtest.assuré)
+p.confusiontest <- as.matrix(table(test.p$predtest.assuré, test.p$assuré))
+```
+
+```{r CONTINGET2}
+set.seed(124)
+test.lf <- cbind(test_data7, predict(regl7_l, newdata = test_data7, type = "response",se = TRUE))
+predtest.assuré <- factor(ifelse(test.lf$fit > 0.5, 1, 0))
+test.lf <- cbind(test.lf, predtest.assuré)
+mf.confusiontest <- as.matrix(table(test.lf$predtest.assuré, test.lf$assuré))
+```
+
+```{r CONTINGET3}
+set.seed(124)
+test.pf<- cbind(test_data7, predict(regp7_p, newdata = test_data7, type = "response",se = TRUE))
+predtest.assuré <- factor(ifelse(test.pf$fit > 0.5, 1, 0))
+test.pf <- cbind(test.pf, predtest.assuré)
+pf.confusiontest <- as.matrix(table(test.pf$predtest.assuré, test.pf$assuré))
+```
+
+
+
+
+
+```{r CONTINGET4}
+set.seed(124)
+test_data5<-test_data
+test_data5$age<-test_data5$age^2
+test_data5$revenu<-log(test_data5$revenu+1)
+colnames(test_data5) <-c("assurance_privé","Age²","hispanique","blanc","femme","année_d_édu_ation","marié","excellente_santé","trés_bonne_santé","bonne_santé","santé_passable","mauvaise_santé","maladie_chronique","adl","retraité","conjoint_retraité","lnrevenu","assuré","statut_santé")
+
+test.l5 <- cbind(test_data5, predict(regl5, newdata = test_data5, type = "response",se = TRUE))
+predtest.assuré <- factor(ifelse(test.l5$fit > 0.5, 1, 0))
+test.l5 <- cbind(test.l5, predtest.assuré)
+m5.confusiontest <- as.matrix(table(test.l5$predtest.assuré, test.l5$assuré))
+```
+
+```{r CONTINGET15}
+set.seed(124)
+test.p5<- cbind(test_data5, predict(regp5, newdata = test_data5, type = "response",se = TRUE))
+predtest.assuré <- factor(ifelse(test.p5$fit > 0.5, 1, 0))
+test.p5 <- cbind(test.p5, predtest.assuré)
+p5.confusiontest <- as.matrix(table(test.p5$predtest.assuré, test.p5$assuré))
+```
+
+```{r CONTINGET6}
+set.seed(124)
+test.lf5 <- cbind(test_data5, predict(regl5_l, newdata = test_data5, type = "response",se = TRUE))
+predtest.assuré <- factor(ifelse(test.lf5$fit > 0.5, 1, 0))
+test.lf5 <- cbind(test.lf5, predtest.assuré)
+mf5.confusiontest <- as.matrix(table(test.lf5$predtest.assuré, test.lf5$assuré))
+```
+
+```{r CONTINGET7}
+set.seed(124)
+test.pf5<- cbind(test_data5, predict(regp5_p, newdata = test_data5, type = "response",se = TRUE))
+predtest.assuré <- factor(ifelse(test.pf5$fit > 0.5, 1, 0))
+test.pf5 <- cbind(test.pf5, predtest.assuré)
+pf5.confusiontest <- as.matrix(table(test.pf5$predtest.assuré, test.pf5$assuré))
+```
+
+\begin{center}
+```{r TABCONTINGENCET,fig.show='hold' ,fig.width = 1, fig.height = 1}
+set.seed(124)
+kable(m5.confusiontest) %>%
+  add_header_above(c(" ", "Modéle logit 5 " = 2))
+kable(mf5.confusiontest) %>%
+  add_header_above(c(" ", "Modéle logit 5 final " = 2))
+kable(p5.confusiontest) %>%
+  add_header_above(c(" ", "Modéle probit 5 " = 2))
+kable(pf5.confusiontest) %>%
+  add_header_above(c(" ", "Modéle probit 5 final " = 2))
+kable(m.confusiontest) %>%
+  add_header_above(c(" ", "Modéle logit 7 " = 2))
+kable(mf.confusiontest) %>%
+  add_header_above(c(" ", "Modéle logit 7 final " = 2))
+kable(p.confusiontest) %>%
+  add_header_above(c(" ", "Modéle probit 7" = 2))
+kable(pf.confusiontest) %>%
+  add_header_above(c(" ", "Modéle probit 7 final" = 2))
+```
+
+
+
+
+```{r TERREURT}
+set.seed(124)
+TL7<-(m.confusiontest[1,2]+m.confusiontest[2,1])/sum(m.confusiontest)
+TL7F<-(mf.confusiontest[1,2]+mf.confusiontest[2,1])/sum(mf.confusiontest)
+TP7<-(p.confusiontest[1,2]+p.confusiontest[2,1])/sum(p.confusiontest)
+TP7F<-(pf.confusiontest[1,2]+pf.confusiontest[2,1])/sum(pf.confusiontest)
+TL5<-(m5.confusiontest[1,2]+m5.confusiontest[2,1])/sum(m5.confusiontest)
+TL5F<-(mf5.confusiontest[1,2]+mf5.confusiontest[2,1])/sum(mf5.confusiontest)
+TP5<-(p5.confusiontest[1,2]+p5.confusiontest[2,1])/sum(p5.confusiontest)
+TP5F<-(pf5.confusiontest[1,2]+pf5.confusiontest[2,1])/sum(pf5.confusiontest)
+TAUX_D_ERREUR<-c(TL5,TL5F,TP5,TP5F,TL7,TL7F,TP7,TP7F)
+TABB<-cbind(TAUX_D_ERREUR)
+colnames(TABB)<-c("Taux d'érreur")
+rownames(TABB)<-c("Modéle logit 5","Modéle logit 5 final","Modéle probit 5","Modéle probit 5 final","Modéle logit 7","Modéle logit 7 final","Modéle probit 7","Modéle probit 7 final")
+kable(TABB,align = "c",caption = "Taux d'erreur sur les données test") %>%
+kable_styling(latex_options=c("striped","hold_position"),full_width = F,font_size = 10)
+```
+\end{center}
+D'aprés le calcul des taux d'erreur les estimation du modéle logit 7 "final" et les estimations du modéle probit  7 "final" semble être les meilleurs tout en notant que l'erreur sur le modéle logit 7 final est faiblement plus petite comparer à l'erreur sur le modéle 7 probit final.Pour la suite nous nous focaliserons sur le modéle logit 7 final.
+
+# Odds ratio ,test et effet marginal.
+
+
+## ODDS-RATIO
+
+- Bien que l'odds-ratio est d'une valeur qui ne s'interprete pas aisément néanmoins elle donne quelques informations globales.L’odds ratio s’interprète comme le risque relatif à la réalisation d'un évenement.Si l'odds ration est inférieur à un alors on a moins de "chance" à la survenue d'un évenement par rapport à une autre.Si l'odds ration est supérieur à un alors on a plus de "chance" à la survenue d'un évenement par rapport à une autre.Si elle est egale à zéro alors les "chances" des deux évenement sont les même.Pour faire simple dans notre cas l'odds ratio nous montre si la variable explicative à un effet positif (de chance) ou négatif(malchance) sur le fait d'être assuré.
+
+```{r REGL7}
+set.seed(124)
+forest_model(regl7_l)
+```
+- Ce tableau nous donne dans un premier temps la valeur de l'odds ratio associée à chaque variables explcatives.On peut aussi voir l'intervalle de confiance associé à chaque odds ration,ce qui peut nous donner une information sur la significatvité de l'odds ratio.
+
+-D'aprés  ce tableau ,on peut déja observer que les odds ratio associés aux variables "blanc","hispanique","adl" et "revenu" sont inférieur à 1,ce qui nous suggére que ces variables là ont un effet dit"négatif" sur le fait d'être assuré.
+Et que les variables "année d'éducation", "maladie chronique" et "lnrevenue" ont un effet positif sur l'évenement être assuré.
+De plus on remarque la valeur assez élevée du odds ration lié à la variable "lnrevenu"
+
+## Test
+
+### Test de wald
+```{r}
+set.seed(124)
+library(aod)
+x<-wald.test(coef(regl7_l),Sigma = vcov(regl7_l) ,Terms = 2:7)
+print.wald.test(x,digits = 5)
+```
+Pour notre test on rejette l’hypothèse H0  si la p-value est inférieure à 5%.
+\linebreak
+Ici notre p.value vaut 7.5728e-13 donc au rique de 5% on rejette HO et on accepte l'hypothése que nos coéfficient sont différent de 0.
+
+### Test de spécification Hosmer-Lemeshow
+
+```{r}
+set.seed(124)
+library(ResourceSelection)
+library(rms)
+library(generalhoslem)
+ H<-hoslem.test(regl7_l$data$assuré, fitted(regl7_l), g=10)
+ print(H)
+ logitgof(regl7_l$data$assuré, fitted(regl7_l), g=10)
+```
+Notre modéle à une p-value inférieur à 5% ce qui suggére que nous avons une erreur d'étalonnage globale au risque de 5%.
+
+
+
+## Effet marginal 
+
+
+```{r EFFET M,results='asis',results='markup'}
+set.seed(124)
+library(mfx)
+EFF<-logitmfx(regl7_l,data=test_data7,atmean = TRUE)
+print(EFF)
+```
+
+
+-L'effet marginal de la variable blanc est de 0.02 , cela equivaut à dire que si un individu est blanc alors la probabilité qu'il ait une assurance complémentaire augmente de 2 point.
+-L'effet marginal correspondant à la variable hispanique vaut -0.11,ceci nous dit que si une personne est d'hispanique alors la probabilité qu'il ait une assurance complémentaire baisse de 10 point.
+
+-L'effet marginal associé à la variable année d'éducation vaut 0.002,on peut donc dire qu'en moyenneune variation positif  de 1% sur  l'année d'étude augmente la probababilité d'être souscrit à une complémentaire santé augmente de 0.2 point.
+
+-L'effet marginal associé à la variable maladie chronique vaut 0.010,on peut donc dire qu'en moyenne une variation positif  de 1% sur la variable maladie chronique augmente la probabilité d'avoir une souscrition à une assurance complémentaire de 1 point.
+
+-L'effet marginal correspondant à la variable adl vaut -0.04 ce qui indique qu'en moyenne une variation positif  de 1% sur la variable adl augmente la probabilité d'avoir une souscription à une assurance complémentaire de 4 point.
+
+-L'effet marginal correspondant à la variable revenu vaut -0.003 ce qui nous emméne à dire qu'en moyenne une variation positif  de 1% sur  le revenu baisse la probabilité d'avoir une souscription à l'assurance complémentaire de 0.3 point.
+
+-L'effet marginal correspondant à notre variable lnrevenu vaut 0.34,ce qui veut dire qu'en une variation positif  de 1% sur le revenu au logarithme augmente la probabilité d'avoir une souscription à l'assurance complémentaire de 34 point.
+
+# Interprétation 
+
+- On peut interpreter l'effet marginaux positf sur les blancs et négatif sur les hispaniques en disant que l'étude a été faite aux états-unis ,où il y'a une différence entre les blancs et les hispaniques qui viennent de l'amérique du sud genéralement clandestinements .Les blancs trés majoritaire occupent des bons postes tandis que les immigrés hispaniques ont des postes moins bien remunérés donc n'ont pas forcément le moyen de se payer une souscription à une assurance complémentaire contrairement aux indivudus blancs qui dans la moyenne le peuvent.
+
+-Les variables année d'éducation et maladie chronique ont tout les deux des éffets marginaux positifs qui peut s'expliquer par le fait que plus on étudie plus on a un revenu et donc se permettre une complémentaire santé.Et généralement quand on est sujet à revenr continuellement dans un hopital comme quand on a une maladie chronique on opte généralement pour une complémentaire santé.
+
+-Pour les variables revenu et lnrevenu on a effet marginaux qui s'oppose,on va tenter de l'expliquer.
+D'abord il est nécécessaire de dire que la majorité des individus avait des revenu pas trés élevé ,donc de ce fait on peut dire que n'ayant pas forcément des revenus illimités les personnes à faible revenu préferent tout simplement  se souscrire à une complémentaire santé et ainsi en cas de problémes médicaux il ne débourseront pas leurs argents.Alors qu'une personne aisé elle n'a pas forcement ce besoin là elle peut elle même se payer ses séjours à l'hôpital et ne pas opter pour une assurance complémentaire .Donc si le revenu augmente ils vont de moins en moins souscrire une assurance complémentaire.
+
+\linebreak
+
+Et d'un autre coté on peut se dire que justement une personne qui n'est pas assez riche et/ou  qui as souvent des problémes médicaux va préférer garder son argent pour ses loisirs,son alimentation ou autre probléme alors qu'une personne moyennement riche ou riche va elle se prevenir de tout risque d'autant plus qu'on a vu que les années d'education(plus on étudie mieux est le salaire) avait un effet positif, donc cela vont opter pour une assurance santé,d'autant plus qu'on sait qu'aux états-uns les assurances santé coûtent particuliérement chére.Et ces donc ce sont ces individus là qu'arrive à capter la variables lnrevenu même s'ils ne sont pas nombreux.
+
+
+# Discussion et Limite
+
+Dans notre études ,je pense que l'environnement de l'étude est déjà un peu affiné car ici on observe des individus bien précis de plus de 52 ans qui sont déjà dans des hopitaux et ayant des suivis.Parce que ce qui nous frappe en premier c'est le fait que la variable statut_santé ou encore les variables associées à la santé ne soient aucunement significatif alors que le but d'une assurance complémentaire c'est justement d'alléger les coût liés à la santé.Pour moi d'un point de vue personnel ça me semble un peu bizarre et je n'ai su trouver le pourquoi et c'est peut-là la limite de l'étude.
+
+\linebreak
+
+Les variables mis en avance ne sont pour la plus part non liées à la santé.On pourrait alors se dire que la santé n'a pas vraiment une influence sur le fait qu'une personne opte ou pas pour une souscription à une assurance complémentaire.
+Pour se faire,il faudrait aussi peut-être faire une étude sur l'assurance santé auquelle les individus ce sont souscrire et ce qu'elle couvre.

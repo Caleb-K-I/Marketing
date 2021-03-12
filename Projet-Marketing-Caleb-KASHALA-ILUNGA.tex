@@ -1,0 +1,1486 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  14pt,
+  french,
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={projet marketing},
+  pdfauthor={KASHALA ILUNGA Caleb},
+  pdflang={fr},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage[normalem]{ulem}
+% Avoid problems with \sout in headers with hyperref
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage[Glenn]{fncychap}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifxetex
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{french}
+\else
+  \usepackage[shorthands=off,main=french]{babel}
+\fi
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{projet marketing}
+\author{KASHALA ILUNGA Caleb}
+\date{03/04/2020}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\hypertarget{nos-variable-uxe9tudiuxe9es}{%
+\section{Nos variable étudiées}\label{nos-variable-uxe9tudiuxe9es}}
+
+-La base de données que nous allons étudier est une base de données qui
+contient des informations sur diverses utilisations des services
+médicaux. Les personnes âgées peuvent obtenir une assurance
+complémentaire soit en l'achetant elles-mêmes ou en adhérant à des
+régimes parrainés par l'employeur.Le but de l'étude que nous allons ici
+réaliser,est de savoir si oui ou non les personnes âgées ont souscrit
+une assurance complémentaire,la variable \emph{assuré} sera donc notre
+variable à expliquer.Pour ce faire nous allons commencer par une études
+globale sur la base de données puis ensuite nous allons procéder à une
+estimation d'un modéle logit et probit et définir le meilleur modéle de
+``prédiction''. \linebreak -Notre base de données contient 3206
+observations et 20 variables. \linebreak Nous observons que notre base
+de données a une varibale appelé ``X'' qui correspond à la numérotation
+des lignes de chaque individu, nous l'avons donc retiré cette variable
+car elle apporte aucune information importante dans l'étude que nous
+aurons à mener ici. \linebreak Il nous reste donc 19 variables sur notre
+base de données dont la variable à expliquer \emph{assuré} avec
+lesquelles nous allons faire notre étude. - Nos variables explicatives
+sont : \linebreak Pour toute les variables la valeur 1 veut dire OUI et
+0 veut dire NON sauf celle dont nous allons le préciser.\\
+\linebreak
+
+\textbf{assurance\_privé} : Si oui ou non l'individu a souscrit une
+assurance privée,prend la valeur 1 ou 0 .
+
+\linebreak
+
+\textbf{age} :Qui correspond à l'âge de l'individu.
+
+\linebreak
+
+\textbf{hispanique} :Si oui ou non l'individu est hispanique,prend la
+valeur 1 et 0.
+
+\linebreak
+
+\textbf{blanc} :si oui ou non l'individu est blanc.
+
+\linebreak
+
+\textbf{femme} :Si oui ou non l'individu est une femmme,prend la valeur
+1 et 0.
+
+\linebreak
+
+\textbf{année\_d\_éducation}: Qui correspond au nombre d'année d'étude
+éffectuer par l'individus.
+
+\linebreak
+
+\textbf{marié}:Si oui ou non l'individu est marié.
+
+\linebreak
+
+\textbf{excellente\_santé}:Si la personne a oui ou non une excellente
+santé,prend la valeur 1 et 0.
+
+\linebreak
+
+\textbf{trés\_bonne\_santé}:Si la personne a oui ou non une trés bonne
+santé,prend la valeur 1 et 0.
+
+\linebreak
+
+\textbf{bonne\_santé}:Si la personne a oui ou non une bonne santé,prend
+la valeur 1 et 0.
+
+\linebreak
+
+\textbf{santé\_passable}:Si la personne a oui ou non une santépassable
+,prend la valeur 1 et 0.
+
+\linebreak
+
+\textbf{mauvaise\_santé}:Si la personne a oui ou non une mauvaise
+santé,prend la valeur 1 et 0.
+
+\linebreak
+
+\textbf{maladie\_chronique}:Nombre de maladie chronique chez l'individu.
+
+\linebreak
+
+\textbf{adl}:le nombre de limitations (jusqu'à cinq) sur les activités
+de la vie quotidienne.
+
+\linebreak
+
+\textbf{retraité}:Si l'individu est retaité.
+
+\linebreak
+
+\textbf{conjoint\_retraité}:Si le conjoint de l'individu est retraité.
+
+\linebreak
+
+\textbf{revenu}:revenu de l'individu.
+
+\linebreak
+
+\textbf{statut\_santé}:statut santé de l'individu.
+
+\linebreak
+
+\begin{itemize}
+\tightlist
+\item
+  Notre variable à expliquer \emph{assuré}:
+\end{itemize}
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-1-1.pdf}
+On constate que sur notre base de données il y'a environs 2000 indivus
+qui ne sont pas souscrit à une assurance complémentaire et environs 1250
+qui sont souscrit à une assurance complémentaire.
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-2-1.pdf}
+- On constate qu'il y'a bien plus de blanc que d'hispanique dans notre
+base de données.
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-3-1.pdf}
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-3-2.pdf}
+On contate que la majorité des individus ont des revenu reparti entre 0
+et 250.Nous avons pas l'information pour savoir si les revenus sont
+donnés dans quel ordre d'échelle. Nous avons mis une representaion du
+revenu au logarithme pour montrer qu'il y'a un effet de lissage ce quin
+permet de mieux capter les changements.\[\\\]
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+-À travers ce graphique on peut voir deux imformations.La premiere est
+qu'il y'a plus d'homme que de femme dans notre base de données et la
+deuxiéme et que chez les femmes comme chez les hommes il y' a plus
+d'individu qu n'ont pas de d'assurance complémentaire.\[\\\]
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-5-1.pdf}
+- Comme on peut le voir sur ce graphique la tranche d'âge la plus
+representé dans notre base de données et la tranche d'age 65 72 ans
+environs.Et en majorité il y'a toujours plus de non souscrit à une
+assurance complémentaire que des souscrit\[\\\]
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-6-1.pdf}
+-Ce graphique nous montre que la majorité des individus non souscrit et
+souscrit ont effectué 12 ans d'étude.Et que la repartions d'individus
+souscrit à l'assurance commence à partir de 8 ans études.\[\\\]
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-7-1.pdf}
+-on voit assez bien que la plus part d'individus souscrit ou pas à une
+assurance complémentaire n'ont pas de restriction dans pour la limite
+d'activités dans la vie quotidenne et que plus il y'a de restricton
+moins la densité est grande.\[\\\]
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/unnamed-chunk-8-1.pdf}
+-On remarque sur ce graphique que la majorité des personnes qui se
+souscrivent à une assurance complémentaire on un bonne santé et que
+c'est la même chose chez les non assuré.Donc on d'autre termes que la
+santé n'a pas forcément une grande influence dans le fait d'avoir ou pas
+une assurance complémentaire,il faudra le vérifier.\(\\\)
+
+\hypertarget{moduxe9le-guxe9nuxe9ral-vraisemblance-et-log-vraisemblance.}{%
+\section{Modéle général , Vraisemblance et
+Log-vraisemblance.}\label{moduxe9le-guxe9nuxe9ral-vraisemblance-et-log-vraisemblance.}}
+
+Le modéle probit et logit sont des modéle dichotomique par modéle
+dichotomique, on entend un modéle statistique dans lequel la variable
+expliquée ne peut prendre que deux modalités (variable dichotomique). Il
+s'agit alors généralement d'expliquer la survenue ou non d'un événement,
+ou d'un choix. On considére un échantillon de n individus d'indices i =
+1, .., n.~ Pour chaque individu, on observe si un certain évènement
+s'est réalisé et l'on pose:
+
+\(Y_{i}\) =
+\(\left\{\begin{array}{ll}1~ si~ l'evenement~ se ~ réalise~ ,Y^{*}\geq 0\\0~ sinon~ ,Y^{*}\leq 0\end{array}\right.\)\sout{avec}Y\^{}\{*\}=\(\beta X_{i}\)
++\(\varepsilon_{i}\)
+
+\begin{itemize}
+\tightlist
+\item
+  On utilise la méthode du maximum de vraisemblance pour estimer nos
+  paramétres qui s'ecrit de façon suivante:
+\end{itemize}
+
+\(L(\theta)=\prod_{i=1}^{N}F( X_{i} \theta)^{Y_i}(1-F( X_{i} \theta))^{1-Y_i}\)
+
+\begin{itemize}
+\tightlist
+\item
+  Et sa log-vraisemblance qui s'ecrit de façon suivante
+\end{itemize}
+
+\(log(L(\theta))=\sum_{i:Y_i=1}logF( X_{i} \theta) + \sum_{i:Y_i=1}log(1-F( X_{i} \theta))\)
+
+\begin{itemize}
+\tightlist
+\item
+  Elle permet d'obtenir les différents coefficients associés à nos
+  modéles .
+\end{itemize}
+
+\hypertarget{estimation-probit-et-logit}{%
+\section{Estimation (probit et
+logit)}\label{estimation-probit-et-logit}}
+
+Nous allons ici vous présenter les Modéles probit et logit.
+
+\hypertarget{probit}{%
+\subsection{Probit}\label{probit}}
+
+\begin{itemize}
+\tightlist
+\item
+  Pour le modéle Probit on pause F ,qui est la fonction de répartition
+  d'une gaussienne centrée réduite,usuellement notée Φ :\(\\\)
+\end{itemize}
+
+F( X\_\{i\} \theta)=\Phi( X\_\{i\}
+\theta)=\int\emph{\{i=1\}\^{}\{X}\{i\}\theta\}
+\frac{\exp{(-t²/2)}}{\sqrt{2\pi}}dt
+
+\begin{itemize}
+\tightlist
+\item
+  Et sa densité correspondante, usuellement notée φ, est :\(\\\) f(
+  X\_\{i\} \theta)=\phi( X\_\{i\} \theta)=
+  \frac{\exp{-((X_{i}  \theta)²/2)}}{\sqrt{2\pi}}dt \[\\\] \#\# Logit
+\end{itemize}
+
+-Pour le modéle Logit on pause F ,qui est la fonction de répartition
+introduite spécialement pour ce type de modéle,usuellement notée
+Λ:\(\\\)
+
+F( X\_\{i\} \theta)=\Lambda( X\_\{i\} \theta)=
+\frac{\exp{(X_{i}  \theta)}}{1+\exp(X_{i}  \theta)  }dt=\frac{1}{1+\exp(-X_{i}  \theta)}dt
+
+\begin{itemize}
+\tightlist
+\item
+  Et sa densité correspondante, usuellement notée λ, est :\[\\\]
+\end{itemize}
+
+f( X\_\{i\} \theta)=\lambda( X\_\{i\} \theta)=
+\frac{\exp{(-X_{i}  \theta)}}{(1+\exp(-X_{i}  \theta))²  }dt=\Lambda(
+X\_\{i\} \theta)(1-\Lambda( X\_\{i\} \theta))
+
+\begin{itemize}
+\tightlist
+\item
+  Il n'y a pratiquement pas de différence entre ces deux lois,
+  l'introduction de la loi logistique étant simplement plus simple en
+  terme de calcul en général. La seule différence notable entre les deux
+  modéles probit et logit vient tout simplement de la spécification de
+  la fonction de répartition F.
+\end{itemize}
+
+\hypertarget{hypothuxe9se-et-spuxe9cification-de-test}{%
+\section{Hypothése et spécification de
+test}\label{hypothuxe9se-et-spuxe9cification-de-test}}
+
+\textbf{Test de wald}
+
+Le test de Wald est un test paramétrique économétrique qui permet de
+tester la ``vraie'' valeur du paramètre basé sur l'estimation de
+l'échantillon.À savoir si nos paramétres sont siginificatifs ou pas.
+
+le test s'écrit de façon suivante:
+
+H0:\(\beta_k\) = 0 ,alors le paramétre est n'est pas significativement
+différent de 0 \(\\\) H1:\(\beta_k\) \(\ne\) ,0 alors le paramétre est
+significativement différent de 0 \(\\\)
+
+\emph{la statistique:}
+
+\[W= \frac{\beta²_k}{S²_k }\]
+
+\emph{Décision}
+
+On rejette H0 au risque \(\alpha\) si W \(\geq\) \(\chi²_{1-\alpha}(1)\)
+
+\textbf{Test de spécification Hosmer-Lemeshow}
+
+Le test de spécification Hosmer-Lemeshow est un test statistique pour la
+qualité d'ajustement pour la régression logistique modèles, permet de
+tester si les proportions observées et attendues diffèrent de manière
+significative . soit G le nombre de groupe,les observations sont
+regroupées par probabilité attendue. les observations avec une
+probabilité attendue similaire sont regroupées dans le même groupe, pour
+créer 10 groupes. soit p\_g la probabilité moyenne prédite dans le
+groupe g soit y\_g la fréquence d'échantillonnage moyenne dans le groupe
+g.\(\\\)
+
+\emph{la statistique:}\(\\\)
+
+\(HL=\sum^{G}_{g=1} \frac{(p_g-y_g)²}{y_g(1-y_g) }\)
+
+Sous la valeur nulle de spécification correcte, la statistique est
+distribuée comme \chi²(G-2).
+
+\emph{Décision}\linebreak
+
+Si la p-value est inférieur à l'alpha choisi alors l'hypothése nulle
+selon laquelle les proportions observées et attendues sont les mêmes est
+rejetée.\linebreak
+
+\hypertarget{comparaison-des-moduxe9les}{%
+\section{Comparaison des modéles}\label{comparaison-des-moduxe9les}}
+
+\begin{itemize}
+\tightlist
+\item
+  Nous avons éffectué une premiére régression probit et logit avec tout
+  nos variables pour avoir une vue d'ensemble sur nos variables et
+  données et pour essayer de voir la significativité de chaque varible
+  et on s'aperçoit que toutes les variables sauf assurance privée et la
+  ``constante'' n'ont pas de coéfficient \(\beta\) associé ce qui
+  suggére une certaine corrélation forte entre l'un de nos variables
+  explicatives et notre variable à expliquer.
+\end{itemize}
+
+\linebreak
+
+le modéle est le suivant:
+
+\linebreak
+
+\begin{center}
+$assuré_i$ = $\beta_0$ +  $\beta_1$ $assurance privé$  + $\beta_2$ $age$+ $\beta_3$ $hispanique$ + $\beta_4$ $blanc$ + $\beta_5$ $femme$  + $\beta_{6}$ $année d'éducation$ + $\beta_{7}$ $marié$ + $\beta_{8}$ $excellente santé$ +  $\beta_9$ $trés bonne santé$  + $\beta_10$ $bonne santé$+ $\beta_11$ $santé passable$ + $\beta_12$ $mauvaise santé$ + $\beta_13$ $maladie chronique$  + $\beta_{14}$ $adl$ + $\beta_{15}$ $retraité$ + $\beta_{16}$ $conjoint retraité$+ $\beta_{17}$ $revenu$ + $\beta_{18}$ $statut santé$ + $\varepsilon_i$ 
+\end{center}
+
+\begin{table}[!htbp] \centering 
+  \caption{regression logit et probit avec  toute les variables} 
+  \label{} 
+\tiny 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{assuré} \\ 
+\\[-1.8ex] & \textit{logistic} & \textit{probit} \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ assurance\_privé & 53.13213 & 13.98244 \\ 
+  & (16,522.58000) & (3,432.36700) \\ 
+  & & \\ 
+ age & $-$0.00000 & 0.00000 \\ 
+  & (2,306.54900) & (479.15820) \\ 
+  & & \\ 
+ hispanique & 0.00000 & 0.00000 \\ 
+  & (32,311.46000) & (6,712.32800) \\ 
+  & & \\ 
+ blanc1 & $-$0.00000 & $-$0.00000 \\ 
+  & (21,544.94000) & (4,475.70500) \\ 
+  & & \\ 
+ femme & 0.00000 & $-$0.00000 \\ 
+  & (17,951.37000) & (3,729.18400) \\ 
+  & & \\ 
+ année\_d\_édu\_ation & $-$0.00000 & 0.00000 \\ 
+  & (2,774.17800) & (576.30260) \\ 
+  & & \\ 
+ marié & $-$0.00000 & $-$0.00000 \\ 
+  & (22,660.49000) & (4,707.44900) \\ 
+  & & \\ 
+ excellente\_santé & $-$0.00000 & $-$0.00000 \\ 
+  & (42,117.78000) & (8,749.47100) \\ 
+  & & \\ 
+ trés\_bonne\_santé & $-$0.00000 & $-$0.00000 \\ 
+  & (36,576.05000) & (7,598.24400) \\ 
+  & & \\ 
+ bonne\_santé & 0.00000 & 0.00000 \\ 
+  & (34,416.78000) & (7,149.68200) \\ 
+  & & \\ 
+ santé\_passable & $-$0.00000 & $-$0.00000 \\ 
+  & (33,561.38000) & (6,971.98200) \\ 
+  & & \\ 
+ mauvaise\_santé &  &  \\ 
+  &  &  \\ 
+  & & \\ 
+ maladie\_chronique & 0.00000 & 0.00000 \\ 
+  & (6,374.88200) & (1,324.30600) \\ 
+  & & \\ 
+ adl & 0.00000 & 0.00000 \\ 
+  & (11,320.09000) & (2,351.61600) \\ 
+  & & \\ 
+ retraité & 0.00000 & 0.00000 \\ 
+  & (17,451.86000) & (3,625.41600) \\ 
+  & & \\ 
+ conjoint\_retraité & $-$0.00000 & $-$0.00000 \\ 
+  & (19,145.87000) & (3,977.32600) \\ 
+  & & \\ 
+ revenu & 0.00000 & 0.00000 \\ 
+  & (123.85110) & (25.72858) \\ 
+  & & \\ 
+ statut\_santé &  &  \\ 
+  &  &  \\ 
+  & & \\ 
+ Constant & $-$26.56607 & $-$6.99122 \\ 
+  & (159,990.50000) & (33,236.13000) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 2,138 & 2,138 \\ 
+Log Likelihood & $-$0.00000 & $-$0.00000 \\ 
+Akaike Inf. Crit. & 34.00000 & 34.00000 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+Et on s'aperçoit rapidement à travers ce graphique de matrice de
+corrélation que ceci est dû à la forte corrélation que nous avons entre
+la variable assurance privée et assuré.
+
+\linebreak
+
+De même nous constatons aussi des corrélation plus ou moins important
+entre d'autres variables comme:
+
+\linebreak
+
+\begin{itemize}
+\tightlist
+\item
+  statut stanté et bonne santé
+
+  \begin{itemize}
+  \tightlist
+  \item
+    statut stanté et mauvaise santé
+  \item
+    statut stanté et santé passable
+  \item
+    statut stanté et maladie chronique
+  \end{itemize}
+\end{itemize}
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/corrélation-1.pdf}
+
+Pour la suite de notre étude, toute les estimations de nos modéles qui
+seront réalisées sans la variable la variable \emph{``assurance
+privée''}.
+
+\linebreak
+
+\hypertarget{mise-en-place-des-diffuxe9rent-moduxe9le}{%
+\subsection{Mise en place des différent
+modéle}\label{mise-en-place-des-diffuxe9rent-moduxe9le}}
+
+\begin{itemize}
+\tightlist
+\item
+  Le modéle 0 est le modéle suivant:
+\end{itemize}
+
+Dans ce modéle la variable ``statut santé'' a été retiré dû à sa
+colinéarité de plus nous avons remarquer que cette même variable est une
+variable qui traduit de façon global les informations liées aux cinq
+variables associées à l'état de santé.
+
+\begin{itemize}
+\tightlist
+\item
+  le modéle 0 que nous proposant est donc le suivant:
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_{7}$ $excellente santé_i$ +  $\beta_8$ $trés bonne santé_i$  + $\beta_9$ $bonne santé_i$+ $\beta_10$ $santé passable_i$ + $\beta_11$ $mauvaise santé_i$ + $\beta_12$ $maladie chronique_i$  + $\beta_{13}$ $adl_i$ + $\beta_{14}$ $retraité_i$ + $\beta_{15}$ $conjoint retraité_i$+ $\beta_{16}$ $revenu_i$ + $\varepsilon_i$ 
+\end{center}
+
+\begin{itemize}
+\item
+  Pour l'éstimation de ce premier modéle nous avons enlever
+  ``excellente\_santé'',``trés\_bonne\_santé'',``bonne\_santé'',``santé\_passable''
+  et ``mauvaise santé'' dû à leur faible et moyenne corrélation avec la
+  variable statut\_santé,dont nous avons également pu rémarquer qu'elle
+  traduisait les informations de ces cinq variables liées à la santé.
+\item
+  Le modéle 1 est le modéle suivant:
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+\begin{itemize}
+\item
+  Le modéle 0 et 1 nous permettra de jauger et savoir s'il est plus
+  pertinent de garder les 5 variables associé à l'état de santé ou
+  simplement de garder la variable ``statut sante'' et de retirer les
+  cinq autres.
+\item
+  Pour l'éstimation de ce deuxiéme modéle nous avons éffectué un
+  changement sur la variable age,que nous avons divisé en 3 classe
+  d'age,une premiére classe de 52 à 64 ans une deuxiéme classe de 64 à
+  76 ans et une troisiéme clase de 76 à 86 ans.
+\item
+  Le modéle 2 est le suivant:
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+\begin{verbatim}
+## [1] 52
+\end{verbatim}
+
+\begin{itemize}
+\item
+  Pour l'éstimation de ce troisiéme modéle nous avons appliquer le
+  logarithme à la variable revenu pour baissé son effet d'echelle et
+  ainsi mieux le comparer aux autres variables et ainsi pouvoir mieux
+  capter les variations liéés à cette variable en la lissant.
+\item
+  Le modéle 3 est le modéle suivant:
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+Pour l'éstimation de ce quatriéme modele nous avons tous simplement mis
+au carré la variable age dans le but d'éssayer de capter au mieux les
+changement liés à cette variable.
+
+\begin{itemize}
+\tightlist
+\item
+  Le modéle 4 est le modéle suivant:
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $Age²_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+Pour l'éstimation de ce cinquiéme modéle nous avons tout simplement
+combiné l"age au carré et le logarithme sur le revenu .
+
+\begin{itemize}
+\tightlist
+\item
+  Le modéle 5 est le modéle suivant:
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $Age²_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+\begin{itemize}
+\item
+  Pour l'estimation de sixiéme modéle nous avons effectué un changement
+  sur la variable statut\_santé,ainsi elle prend la valeur de:
+
+  1 si l'individu a une excellente santé
+
+  \linebreak
+
+  2 si l'individu a une trés bonne santé
+
+  \linebreak
+
+  3 si l'individu a une bonne santé
+
+  \linebreak
+
+  4 si l'individu a une santé passable
+
+  \linebreak
+
+  5 si l'individu a une mauvaise santé
+
+  \linebreak
+\item
+  Le modéle 6 est le modéle suivant:
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $Age²_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_2$ + $\beta_{13}$ $statut santé_3$+ $\beta_{14}$ $statut santé_4$+ $\beta_{15}$ $statut santé_5$+ $\varepsilon_i$
+\end{center}
+
+\begin{itemize}
+\item
+  Pour l'estimation de septiéme modéle nous avons rajouté la variable
+  age² et lnrevenu en plus des age et revenu que nous avions au départ.
+\item
+  Le modéle 7 est le modéle suivant:
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $Age²_i$+ $\beta_{13}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_2$ + $\beta_{13}$ $statut santé_3$+ $\beta_{14}$ $statut santé_4$+ $\beta_{15}$ $statut santé_5$+ $\varepsilon_i$ 
+\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Aprés avoir mise en place nos sept modéles différent,nous allons
+  sélectionner les modéles probits et logits qui présente les meilleurs
+  critéres d'information et estimations sur les données
+  d'entrainement.Ensuite nous allons essayer d'ameliorer nos différents
+  modéles à travers plusieur procéder pour en tirer le meilleur modéle
+  possible.
+\end{itemize}
+
+\linebreak
+
+\begin{table}[!h]
+
+\caption{\label{tab:AIC_BIC}Comparaison des AIC et BIC modèles}
+\centering
+\fontsize{12}{14}\selectfont
+\begin{tabular}[t]{l|c|c}
+\hline
+  & AIC & BIC\\
+\hline
+\cellcolor{gray!6}{Modéle logit 0} & \cellcolor{gray!6}{2685.494} & \cellcolor{gray!6}{2776.176}\\
+\hline
+Modéle probit 0 & 2684.614 & 2775.296\\
+\hline
+\cellcolor{gray!6}{Modéle logit 1} & \cellcolor{gray!6}{2683.492} & \cellcolor{gray!6}{2757.172}\\
+\hline
+Modéle probit 1 & 2682.314 & 2755.993\\
+\hline
+\cellcolor{gray!6}{Modéle logit 2} & \cellcolor{gray!6}{2684.144} & \cellcolor{gray!6}{2780.478}\\
+\hline
+Modéle probit 2 & 2683.200 & 2779.534\\
+\hline
+\cellcolor{gray!6}{Modéle logit 3} & \cellcolor{gray!6}{2617.711} & \cellcolor{gray!6}{2680.055}\\
+\hline
+Modéle probit 3 & 2614.359 & 2676.703\\
+\hline
+\cellcolor{gray!6}{Modéle logit 4} & \cellcolor{gray!6}{2683.627} & \cellcolor{gray!6}{2751.639}\\
+\hline
+Modéle probit 4 & 2682.368 & 2750.380\\
+\hline
+\cellcolor{gray!6}{Modéle logit 5} & \cellcolor{gray!6}{2617.647} & \cellcolor{gray!6}{2685.658}\\
+\hline
+Modéle probit 5 & 2614.251 & 2682.262\\
+\hline
+\cellcolor{gray!6}{Modéle logit 6} & \cellcolor{gray!6}{2685.494} & \cellcolor{gray!6}{2776.176}\\
+\hline
+Modéle probit 6 & 2684.614 & 2775.296\\
+\hline
+\cellcolor{gray!6}{Modéle logit 7} & \cellcolor{gray!6}{2600.871} & \cellcolor{gray!6}{2702.888}\\
+\hline
+Modéle probit 7 & 2598.469 & 2700.487\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\tightlist
+\item
+  Aprés avoir pu étudier le critère d'information d'Akaike (AIC,Akaike
+  information criterion) qui est une mesure de la qualité d'un modèle
+  statistique ainsi que le critère d'information bayésien (BIC,bayesian
+  information criterion) dérivé du critère d'information d'Akaike.Nous
+  avons sélectionné les modéles qui présente les plus faibles mesure
+  d'AIC et de BIC combinés. Les modéles 5 et 7 sont les modéles que nous
+  avons séléctionné pour la suite de l'étude que nous allons mener. À
+  travers ces deux modéles nous allons comparer les modéles probit et
+  logit. -Notre modéle 5 est le suivant
+\end{itemize}
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $Age²_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_i$ + $\varepsilon_i$ 
+\end{center}
+
+-Notre modéle 7 est le suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $age_i$+ $\beta_2$ $hispanique_i$ + $\beta_3$ $blanc_i$ + $\beta_4$ $femme_i$  + $\beta_{5}$ $année d'éducation_i$ + $\beta_{6}$ $marié_i$ + $\beta_7$ $maladie chronique_i$  + $\beta_{8}$ $adl_i$ + $\beta_{9}$ $retraité_i$ + $\beta_{10}$ $conjoint retraité_i$+ $\beta_{11}$ $revenu_i$+ $\beta_{12}$ $Age²_i$+ $\beta_{13}$ $lnrevenu_i$+ $\beta_{12}$ $statut santé_2$ + $\beta_{13}$ $statut santé_3$+ $\beta_{14}$ $statut santé_4$+ $\beta_{15}$ $statut santé_5$+ $\varepsilon_i$ 
+\end{center}
+
+\begin{table}[!htbp] \centering 
+  \caption{regression logit et probit modéle 5} 
+  \label{} 
+\tiny 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{assuré} \\ 
+\\[-1.8ex] & \textit{logistic} & \textit{probit} \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ Age² & $-$0.00010 & $-$0.00007 \\ 
+  & (0.00011) & (0.00006) \\ 
+  & & \\ 
+ hispanique & $-$0.72104$^{***}$ & $-$0.42336$^{***}$ \\ 
+  & (0.25360) & (0.14262) \\ 
+  & & \\ 
+ blanc & $-$0.18087 & $-$0.10826 \\ 
+  & (0.13610) & (0.08212) \\ 
+  & & \\ 
+ femme & $-$0.02093 & $-$0.01639 \\ 
+  & (0.10910) & (0.06653) \\ 
+  & & \\ 
+ année\_d\_édu\_ation & 0.09560$^{***}$ & 0.05872$^{***}$ \\ 
+  & (0.01847) & (0.01106) \\ 
+  & & \\ 
+ marié & 0.09670 & 0.06192 \\ 
+  & (0.15041) & (0.09087) \\ 
+  & & \\ 
+ retraité & 0.15061 & 0.09228 \\ 
+  & (0.10684) & (0.06489) \\ 
+  & & \\ 
+ conjoint\_retraité & 0.01514 & 0.00650 \\ 
+  & (0.11474) & (0.07021) \\ 
+  & & \\ 
+ lnrevenu & 0.62068$^{***}$ & 0.37752$^{***}$ \\ 
+  & (0.07495) & (0.04462) \\ 
+  & & \\ 
+ statut\_santé & $-$0.02650 & $-$0.01050 \\ 
+  & (0.12408) & (0.07505) \\ 
+  & & \\ 
+ adl & $-$0.13845$^{*}$ & $-$0.08416$^{*}$ \\ 
+  & (0.07572) & (0.04428) \\ 
+  & & \\ 
+ Constant & $-$3.22173$^{***}$ & $-$1.96702$^{***}$ \\ 
+  & (0.54526) & (0.32671) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 2,138 & 2,138 \\ 
+Log Likelihood & $-$1,296.82300 & $-$1,295.12500 \\ 
+Akaike Inf. Crit. & 2,617.64700 & 2,614.25100 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+\begin{table}[!htbp] \centering 
+  \caption{regression logit et probit modéle 7} 
+  \label{} 
+\tiny 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{assuré} \\ 
+\\[-1.8ex] & \textit{logistic} & \textit{probit} \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ age & 0.20674 & 0.12900 \\ 
+  & (0.25113) & (0.14949) \\ 
+  & & \\ 
+ blanc & $-$0.21510 & $-$0.13011 \\ 
+  & (0.13863) & (0.08326) \\ 
+  & & \\ 
+ hispanique & $-$0.65206$^{**}$ & $-$0.38452$^{***}$ \\ 
+  & (0.25638) & (0.14470) \\ 
+  & & \\ 
+ femme & $-$0.03859 & $-$0.03085 \\ 
+  & (0.11025) & (0.06714) \\ 
+  & & \\ 
+ année\_d\_édu\_ation & 0.09531$^{***}$ & 0.05908$^{***}$ \\ 
+  & (0.01881) & (0.01125) \\ 
+  & & \\ 
+ marié & $-$0.01276 & $-$0.00259 \\ 
+  & (0.15447) & (0.09325) \\ 
+  & & \\ 
+ maladie\_chronique & 0.08897$^{**}$ & 0.05342$^{**}$ \\ 
+  & (0.04022) & (0.02431) \\ 
+  & & \\ 
+ adl & $-$0.12234 & $-$0.07535 \\ 
+  & (0.08002) & (0.04691) \\ 
+  & & \\ 
+ retraité & 0.10647 & 0.06558 \\ 
+  & (0.10815) & (0.06566) \\ 
+  & & \\ 
+ conjoint\_retraité & 0.00092 & 0.00027 \\ 
+  & (0.11557) & (0.07065) \\ 
+  & & \\ 
+ revenu & $-$0.00499$^{***}$ & $-$0.00275$^{***}$ \\ 
+  & (0.00124) & (0.00069) \\ 
+  & & \\ 
+ statut\_santé2 & 0.19908 & 0.11887 \\ 
+  & (0.16316) & (0.10002) \\ 
+  & & \\ 
+ statut\_santé3 & 0.11026 & 0.06950 \\ 
+  & (0.16884) & (0.10317) \\ 
+  & & \\ 
+ statut\_santé4 & 0.17574 & 0.10032 \\ 
+  & (0.20041) & (0.12170) \\ 
+  & & \\ 
+ statut\_santé5 & $-$0.09505 & $-$0.05467 \\ 
+  & (0.27723) & (0.16571) \\ 
+  & & \\ 
+ age² & $-$0.00162 & $-$0.00101 \\ 
+  & (0.00185) & (0.00110) \\ 
+  & & \\ 
+ lnrevenu & 0.96857$^{***}$ & 0.56906$^{***}$ \\ 
+  & (0.11395) & (0.06559) \\ 
+  & & \\ 
+ Constant & $-$11.40848 & $-$6.98772 \\ 
+  & (8.51336) & (5.06577) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 2,138 & 2,138 \\ 
+Log Likelihood & $-$1,282.43500 & $-$1,281.23500 \\ 
+Akaike Inf. Crit. & 2,600.87000 & 2,598.46900 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+La différence que nous remarquons en premier entre les deux modéles est
+que les estimation \(\beta\) associées aux variables explicatives du
+modéle probit sont toujours plus faibles que les estimation \(\beta\)
+associées aux variables explicatives du modéle logit.Cette différence
+découle probablement de la différence de leur fonction de répartition F
+et de densité f.
+
+De plus nous avons aussi remarqué que les AIC et BIC du modéle probit
+sont toujours un peu plus faible que celle du logit en général.
+
+\begin{itemize}
+\tightlist
+\item
+  Les deux tableau qui vont suivre nous donnes la valeurs des odds
+  ration associés à nosvariables explicatives ainsi que leurs
+  intervalles de confiance qui peut nous renseigner en amont surla
+  significativité d'un coefficient.Un peut plus tard dans l'etude nous
+  expliquerons le rôle des odds ration et qu'elle imformations nous
+  pouvons en tirer de ces odds ratio qui sont généralement compris entre
+  0 et +\(\infty\)
+\end{itemize}
+
+\textbackslash begin\{center\} \textbf{Tableau des odds ratio et
+intervalles de confiance pour le modéle logit 5}
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/FOREST5-1.pdf}
+\textbackslash end\{center\}
+
+\textbackslash begin\{center\} \textbf{Tableau des odds ratio et
+intervalles de confiance pour le modéle logit 7}
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/FOREST7-1.pdf}
+\textbackslash end\{center\}
+
+\hypertarget{pruxe9diction-et-fitted}{%
+\section{Prédiction et fitted}\label{pruxe9diction-et-fitted}}
+
+\begin{itemize}
+\tightlist
+\item
+  Pour la suite de l'étude ,aprés avoir sélectionner nos modéles 3 et 5
+  nous avons effectués une selection du meilleur modéle à partir de ces
+  deux modéle de départ à travers une sélection par AIC pour déterminer
+  le modéle 5 et 7 ``finaux'' puis nous allons les comparer.
+\end{itemize}
+
+\linebreak
+
+Le modéle 5 ``final'' est le suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $hispanique_i$ + $\beta_{2}$ $année d'éducation_i$ + $\beta_{3}$ $adl_i$ + $\beta_{4}$ $lnrevenu_i$+ $\varepsilon_i$ 
+\end{center}
+
+Le modéle 7 ``final'' est le suivant:
+
+\begin{center}
+$assuré_i$ = $\beta_0$  + $\beta_1$ $hispanique_i$ + $\beta_2$ $blanc_i$  + $\beta_{3}$ $année d'éducation_i$ + $\beta_4$ $maladie chronique_i$  + $\beta_{5}$ $adl_i$ + $\beta_{6}$ $revenu_i$+ $\beta_{7}$ $lnrevenu_i$+ $\varepsilon_i$ 
+\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Ces graphique ci-dessous nous montre visuellement la relation qu'à
+  notre variables à expliquer ``assuré'' avec nos différent variables
+  explicatives,à savoir si elle ont réellement une influence sur
+  celle-ci.
+\end{itemize}
+
+\newpage
+
+\textbf{GRAPHIQUE SUR LES LIENS ENTRE LA VARIABLE À EXPLIQUER ET LES
+VARIABLES EXPLICATIVES}
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/FITED5.1-1.pdf}
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/FITTED7-1.pdf}
+
+\hypertarget{training}{%
+\subsection{training}\label{training}}
+
+\textbf{TABLEAU DE CONTINGENCE SUR LES DONNÉE D'APPRENTISSAGE}
+
+\begin{center}
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle logit 5 } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 1023 & 502\\
+\hline
+1 & 268 & 345\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle logit 5 final } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 1025 & 514\\
+\hline
+1 & 266 & 333\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle probit 5 } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 1025 & 508\\
+\hline
+1 & 266 & 339\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle probit 5 final } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 1027 & 518\\
+\hline
+1 & 264 & 329\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle logit 7 } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 994 & 452\\
+\hline
+1 & 297 & 395\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle logit 7 final } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 998 & 453\\
+\hline
+1 & 293 & 394\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle probit 7 } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 1000 & 456\\
+\hline
+1 & 291 & 391\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle probit 7 final} \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 1004 & 458\\
+\hline
+1 & 287 & 389\\
+\hline
+\end{tabular}
+
+
+\begin{table}[!h]
+
+\caption{\label{tab:TRREURA}Taux d'erreur sur les données d'apprentissage}
+\centering
+\fontsize{10}{12}\selectfont
+\begin{tabular}[t]{l|c}
+\hline
+  & Taux d'érreur\\
+\hline
+\cellcolor{gray!6}{Modéle logit 5} & \cellcolor{gray!6}{0.3503274}\\
+\hline
+Modéle logit 5 final & 0.3489242\\
+\hline
+\cellcolor{gray!6}{Modéle probit 5} & \cellcolor{gray!6}{0.3493920}\\
+\hline
+Modéle probit 5 final & 0.3484565\\
+\hline
+\cellcolor{gray!6}{Modéle logit 7} & \cellcolor{gray!6}{0.3601497}\\
+\hline
+Modéle logit 7 final & 0.3648269\\
+\hline
+\cellcolor{gray!6}{Modéle probit 7} & \cellcolor{gray!6}{0.3620206}\\
+\hline
+Modéle probit 7 final & 0.3657624\\
+\hline
+\end{tabular}
+\end{table}
+\end{center}
+
+\hypertarget{test}{%
+\subsection{TEST}\label{test}}
+
+\textbf{TABLEAU DE CONTINGENCE SUR LES DONNÉE TEST}
+
+\begin{center}
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle logit 5 } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 541 & 255\\
+\hline
+1 & 133 & 139\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle logit 5 final } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 540 & 254\\
+\hline
+1 & 134 & 140\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle probit 5 } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 542 & 258\\
+\hline
+1 & 132 & 136\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle probit 5 final } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 543 & 255\\
+\hline
+1 & 131 & 139\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle logit 7 } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 523 & 227\\
+\hline
+1 & 151 & 167\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle logit 7 final } \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 532 & 225\\
+\hline
+1 & 142 & 169\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle probit 7} \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 526 & 227\\
+\hline
+1 & 148 & 167\\
+\hline
+\end{tabular}
+
+
+\begin{tabular}{l|r|r}
+\hline
+\multicolumn{1}{c|}{ } & \multicolumn{2}{c}{Modéle probit 7 final} \\
+\cline{2-3}
+  & 0 & 1\\
+\hline
+0 & 534 & 229\\
+\hline
+1 & 140 & 165\\
+\hline
+\end{tabular}
+
+
+
+
+\begin{table}[!h]
+
+\caption{\label{tab:TERREURT}Taux d'erreur sur les données test}
+\centering
+\fontsize{10}{12}\selectfont
+\begin{tabular}[t]{l|c}
+\hline
+  & Taux d'érreur\\
+\hline
+\cellcolor{gray!6}{Modéle logit 5} & \cellcolor{gray!6}{0.3632959}\\
+\hline
+Modéle logit 5 final & 0.3632959\\
+\hline
+\cellcolor{gray!6}{Modéle probit 5} & \cellcolor{gray!6}{0.3651685}\\
+\hline
+Modéle probit 5 final & 0.3614232\\
+\hline
+\cellcolor{gray!6}{Modéle logit 7} & \cellcolor{gray!6}{0.3539326}\\
+\hline
+Modéle logit 7 final & 0.3436330\\
+\hline
+\cellcolor{gray!6}{Modéle probit 7} & \cellcolor{gray!6}{0.3511236}\\
+\hline
+Modéle probit 7 final & 0.3455056\\
+\hline
+\end{tabular}
+\end{table}
+\end{center}
+
+D'aprés le calcul des taux d'erreur les estimation du modéle logit 7
+``final'' et les estimations du modéle probit 7 ``final'' semble être
+les meilleurs tout en notant que l'erreur sur le modéle logit 7 final
+est faiblement plus petite comparer à l'erreur sur le modéle 7 probit
+final.Pour la suite nous nous focaliserons sur le modéle logit 7 final.
+
+\hypertarget{odds-ratio-test-et-effet-marginal.}{%
+\section{Odds ratio ,test et effet
+marginal.}\label{odds-ratio-test-et-effet-marginal.}}
+
+\hypertarget{odds-ratio}{%
+\subsection{ODDS-RATIO}\label{odds-ratio}}
+
+\begin{itemize}
+\tightlist
+\item
+  Bien que l'odds-ratio est d'une valeur qui ne s'interprete pas
+  aisément néanmoins elle donne quelques informations globales.L'odds
+  ratio s'interprète comme le risque relatif à la réalisation d'un
+  évenement.Si l'odds ration est inférieur à un alors on a moins de
+  ``chance'' à la survenue d'un évenement par rapport à une autre.Si
+  l'odds ration est supérieur à un alors on a plus de ``chance'' à la
+  survenue d'un évenement par rapport à une autre.Si elle est egale à
+  zéro alors les ``chances'' des deux évenement sont les même.Pour faire
+  simple dans notre cas l'odds ratio nous montre si la variable
+  explicative à un effet positif (de chance) ou négatif(malchance) sur
+  le fait d'être assuré.
+\end{itemize}
+
+\includegraphics{Projet-Marketing-Caleb-KASHALA-ILUNGA_files/figure-latex/REGL7-1.pdf}
+- Ce tableau nous donne dans un premier temps la valeur de l'odds ratio
+associée à chaque variables explcatives.On peut aussi voir l'intervalle
+de confiance associé à chaque odds ration,ce qui peut nous donner une
+information sur la significatvité de l'odds ratio.
+
+-D'aprés ce tableau ,on peut déja observer que les odds ratio associés
+aux variables ``blanc'',``hispanique'',``adl'' et ``revenu'' sont
+inférieur à 1,ce qui nous suggére que ces variables là ont un effet
+dit``négatif'' sur le fait d'être assuré. Et que les variables ``année
+d'éducation'', ``maladie chronique'' et ``lnrevenue'' ont un effet
+positif sur l'évenement être assuré. De plus on remarque la valeur assez
+élevée du odds ration lié à la variable ``lnrevenu''
+
+\hypertarget{test-1}{%
+\subsection{Test}\label{test-1}}
+
+\hypertarget{test-de-wald}{%
+\subsubsection{Test de wald}\label{test-de-wald}}
+
+\begin{verbatim}
+## Wald test:
+## ----------
+## 
+## Chi-squared test:
+## X2 = 68.694, df = 6, P(> X2) = 7.5728e-13
+\end{verbatim}
+
+Pour notre test on rejette l'hypothèse H0 si la p-value est inférieure à
+5\%. \linebreak Ici notre p.value vaut 7.5728e-13 donc au rique de 5\%
+on rejette HO et on accepte l'hypothése que nos coéfficient sont
+différent de 0.
+
+\hypertarget{test-de-spuxe9cification-hosmer-lemeshow}{%
+\subsubsection{Test de spécification
+Hosmer-Lemeshow}\label{test-de-spuxe9cification-hosmer-lemeshow}}
+
+\begin{verbatim}
+## 
+##  Hosmer and Lemeshow goodness of fit (GOF) test
+## 
+## data:  regl7_l$data$assuré, fitted(regl7_l)
+## X-squared = 28.976, df = 8, p-value = 0.0003202
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Hosmer and Lemeshow test (binary model)
+## 
+## data:  regl7_l$data$assuré, fitted(regl7_l)
+## X-squared = 28.976, df = 8, p-value = 0.0003202
+\end{verbatim}
+
+Notre modéle à une p-value inférieur à 5\% ce qui suggére que nous avons
+une erreur d'étalonnage globale au risque de 5\%.
+
+\hypertarget{effet-marginal}{%
+\subsection{Effet marginal}\label{effet-marginal}}
+
+\begin{verbatim}
+## Call:
+## logitmfx(formula = regl7_l, data = test_data7, atmean = TRUE)
+## 
+## Marginal Effects:
+##                         dF/dx   Std. Err.       z     P>|z|    
+## blanc              0.01994744  0.04161988  0.4793   0.63174    
+## hispanique        -0.10991305  0.05913847 -1.8586   0.06309 .  
+## année_d_édu_ation  0.00261051  0.00564049  0.4628   0.64350    
+## maladie_chronique  0.00999343  0.01142885  0.8744   0.38190    
+## adl               -0.04253592  0.02228103 -1.9091   0.05625 .  
+## revenu            -0.00338054  0.00072055 -4.6916 2.711e-06 ***
+## lnrevenu           0.34308394  0.04210969  8.1474 3.719e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## dF/dx is for discrete change for the following variables:
+## 
+## [1] "blanc"      "hispanique"
+\end{verbatim}
+
+-L'effet marginal de la variable blanc est de 0.02 , cela equivaut à
+dire que si un individu est blanc alors la probabilité qu'il ait une
+assurance complémentaire augmente de 2 point. -L'effet marginal
+correspondant à la variable hispanique vaut -0.11,ceci nous dit que si
+une personne est d'hispanique alors la probabilité qu'il ait une
+assurance complémentaire baisse de 10 point.
+
+-L'effet marginal associé à la variable année d'éducation vaut 0.002,on
+peut donc dire qu'en moyenneune variation positif de 1\% sur l'année
+d'étude augmente la probababilité d'être souscrit à une complémentaire
+santé augmente de 0.2 point.
+
+-L'effet marginal associé à la variable maladie chronique vaut 0.010,on
+peut donc dire qu'en moyenne une variation positif de 1\% sur la
+variable maladie chronique augmente la probabilité d'avoir une
+souscrition à une assurance complémentaire de 1 point.
+
+-L'effet marginal correspondant à la variable adl vaut -0.04 ce qui
+indique qu'en moyenne une variation positif de 1\% sur la variable adl
+augmente la probabilité d'avoir une souscription à une assurance
+complémentaire de 4 point.
+
+-L'effet marginal correspondant à la variable revenu vaut -0.003 ce qui
+nous emméne à dire qu'en moyenne une variation positif de 1\% sur le
+revenu baisse la probabilité d'avoir une souscription à l'assurance
+complémentaire de 0.3 point.
+
+-L'effet marginal correspondant à notre variable lnrevenu vaut 0.34,ce
+qui veut dire qu'en une variation positif de 1\% sur le revenu au
+logarithme augmente la probabilité d'avoir une souscription à
+l'assurance complémentaire de 34 point.
+
+\hypertarget{interpruxe9tation}{%
+\section{Interprétation}\label{interpruxe9tation}}
+
+\begin{itemize}
+\tightlist
+\item
+  On peut interpreter l'effet marginaux positf sur les blancs et négatif
+  sur les hispaniques en disant que l'étude a été faite aux états-unis
+  ,où il y'a une différence entre les blancs et les hispaniques qui
+  viennent de l'amérique du sud genéralement clandestinements .Les
+  blancs trés majoritaire occupent des bons postes tandis que les
+  immigrés hispaniques ont des postes moins bien remunérés donc n'ont
+  pas forcément le moyen de se payer une souscription à une assurance
+  complémentaire contrairement aux indivudus blancs qui dans la moyenne
+  le peuvent.
+\end{itemize}
+
+-Les variables année d'éducation et maladie chronique ont tout les deux
+des éffets marginaux positifs qui peut s'expliquer par le fait que plus
+on étudie plus on a un revenu et donc se permettre une complémentaire
+santé.Et généralement quand on est sujet à revenr continuellement dans
+un hopital comme quand on a une maladie chronique on opte généralement
+pour une complémentaire santé.
+
+-Pour les variables revenu et lnrevenu on a effet marginaux qui
+s'oppose,on va tenter de l'expliquer. D'abord il est nécécessaire de
+dire que la majorité des individus avait des revenu pas trés élevé ,donc
+de ce fait on peut dire que n'ayant pas forcément des revenus illimités
+les personnes à faible revenu préferent tout simplement se souscrire à
+une complémentaire santé et ainsi en cas de problémes médicaux il ne
+débourseront pas leurs argents.Alors qu'une personne aisé elle n'a pas
+forcement ce besoin là elle peut elle même se payer ses séjours à
+l'hôpital et ne pas opter pour une assurance complémentaire .Donc si le
+revenu augmente ils vont de moins en moins souscrire une assurance
+complémentaire.
+
+\linebreak
+
+Et d'un autre coté on peut se dire que justement une personne qui n'est
+pas assez riche et/ou qui as souvent des problémes médicaux va préférer
+garder son argent pour ses loisirs,son alimentation ou autre probléme
+alors qu'une personne moyennement riche ou riche va elle se prevenir de
+tout risque d'autant plus qu'on a vu que les années d'education(plus on
+étudie mieux est le salaire) avait un effet positif, donc cela vont
+opter pour une assurance santé,d'autant plus qu'on sait qu'aux états-uns
+les assurances santé coûtent particuliérement chére.Et ces donc ce sont
+ces individus là qu'arrive à capter la variables lnrevenu même s'ils ne
+sont pas nombreux.
+
+\hypertarget{discussion-et-limite}{%
+\section{Discussion et Limite}\label{discussion-et-limite}}
+
+Dans notre études ,je pense que l'environnement de l'étude est déjà un
+peu affiné car ici on observe des individus bien précis de plus de 52
+ans qui sont déjà dans des hopitaux et ayant des suivis.Parce que ce qui
+nous frappe en premier c'est le fait que la variable statut\_santé ou
+encore les variables associées à la santé ne soient aucunement
+significatif alors que le but d'une assurance complémentaire c'est
+justement d'alléger les coût liés à la santé.Pour moi d'un point de vue
+personnel ça me semble un peu bizarre et je n'ai su trouver le pourquoi
+et c'est peut-là la limite de l'étude.
+
+\linebreak
+
+Les variables mis en avance ne sont pour la plus part non liées à la
+santé.On pourrait alors se dire que la santé n'a pas vraiment une
+influence sur le fait qu'une personne opte ou pas pour une souscription
+à une assurance complémentaire. Pour se faire,il faudrait aussi
+peut-être faire une étude sur l'assurance santé auquelle les individus
+ce sont souscrire et ce qu'elle couvre.
+
+\end{document}
